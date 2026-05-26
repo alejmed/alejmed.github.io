@@ -1,4 +1,5 @@
 export interface Project {
+  id: string;
   name: string;
   role: string;
   company: string;
@@ -9,6 +10,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'ai-workflow',
     name: 'AI Mobile Development Workflow',
     role: 'Architect',
     company: 'EarnIn',
@@ -18,6 +20,7 @@ export const projects: Project[] = [
     highlights: ['Team-wide adoption', 'Local CI tooling', 'Memory management system'],
   },
   {
+    id: 'earnin-card',
     name: 'EarnIn Card',
     role: 'Cross-Platform Mobile Lead',
     company: 'EarnIn',
@@ -27,6 +30,7 @@ export const projects: Project[] = [
     highlights: ['600K+ waitlist signups', '1M+ Live Pay transactions', '7-engineer team'],
   },
   {
+    id: 'account-activity',
     name: 'Account Activity',
     role: 'Android Owner',
     company: 'EarnIn',

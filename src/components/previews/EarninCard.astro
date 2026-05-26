@@ -1,0 +1,266 @@
+---
+
+---
+
+<div class="ec-preview" aria-hidden="true">
+  <!-- Status bar -->
+  <div class="ec-statusbar">
+    <span class="ec-time">9:41</span>
+    <span class="ec-icons">
+      <svg width="12" height="10" viewBox="0 0 12 10" fill="currentColor">
+        <rect x="0" y="4" width="2" height="6" rx="0.5" opacity="0.4"></rect>
+        <rect x="3" y="2.5" width="2" height="7.5" rx="0.5" opacity="0.6"></rect>
+        <rect x="6" y="1" width="2" height="9" rx="0.5" opacity="0.8"></rect>
+        <rect x="9" y="0" width="2" height="10" rx="0.5"></rect>
+      </svg>
+    </span>
+  </div>
+
+  <!-- Header -->
+  <div class="ec-header">
+    <span class="ec-logo">earnin</span>
+    <div class="ec-avatar">AB</div>
+  </div>
+
+  <!-- Balance -->
+  <div class="ec-balance-area">
+    <p class="ec-balance-label">Available Balance</p>
+    <p class="ec-balance">$847<span class="ec-cents">.32</span></p>
+    <p class="ec-sub">of $1,500.00 earned this period</p>
+  </div>
+
+  <!-- Card -->
+  <div class="ec-card">
+    <div class="ec-card-shine"></div>
+    <div class="ec-card-top">
+      <span class="ec-card-brand">EarnIn</span>
+      <span class="ec-card-tap">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M5 12.5a7 7 0 0 1 7-7"></path>
+          <path d="M5 12.5a11 11 0 0 1 11-11"></path>
+          <circle cx="5" cy="12.5" r="1.5" fill="currentColor"></circle>
+        </svg>
+      </span>
+    </div>
+    <p class="ec-card-num">•••• &nbsp; •••• &nbsp; •••• &nbsp; 4291</p>
+    <div class="ec-card-bottom">
+      <span class="ec-card-name">A. BLANCO</span>
+      <span class="ec-visa">VISA</span>
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="ec-actions">
+    <button class="ec-action-btn">↑ Cash Out</button>
+    <button class="ec-action-btn ec-secondary">⊕ Add Cash</button>
+  </div>
+</div>
+
+<style>
+  .ec-preview {
+    width: 100%;
+    height: 100%;
+    background: #0b1221;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.25rem 1rem;
+    font-family: -apple-system, 'Inter', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle radial glow */
+  .ec-preview::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(79, 110, 245, 0.25), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Status bar */
+  .ec-statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0 0.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.65rem;
+    font-weight: 600;
+  }
+
+  .ec-icons {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Header */
+  .ec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .ec-logo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+
+  .ec-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f6ef5, #8b5cf6);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Balance */
+  .ec-balance-area {
+    margin-bottom: 0.875rem;
+  }
+
+  .ec-balance-label {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .ec-balance {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.2rem;
+  }
+
+  .ec-cents {
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  .ec-sub {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Card */
+  .ec-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #2563eb 100%);
+    border-radius: 10px;
+    padding: 0.75rem;
+    margin-bottom: 0.875rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35);
+    flex-shrink: 0;
+  }
+
+  .ec-card-shine {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .ec-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .ec-card-brand {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: white;
+  }
+
+  .ec-card-tap {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .ec-card-num {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  .ec-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .ec-card-name {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ec-visa {
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+
+  /* Actions */
+  .ec-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .ec-action-btn {
+    flex: 1;
+    padding: 0.45rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.6rem;
+    font-weight: 700;
+    cursor: default;
+    background: #1d4ed8;
+    color: white;
+    letter-spacing: 0.02em;
+  }
+
+  .ec-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+</style>

@@ -1,9 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import EarninCard from '../components/previews/EarninCard.astro';
+import AccountActivity from '../components/previews/AccountActivity.astro';
+import AiWorkflow from '../components/previews/AiWorkflow.astro';
 import { projects } from '../data/projects';
 
-const checkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 ---
 
 <Layout title="Projects — Alejandro Blanco">
@@ -13,31 +16,39 @@ const checkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" s
     <div class="projects-list">
       {
         projects.map((p) => (
-          <article class="project-card card fade-in">
-            <div class="project-top">
-              <div>
-                <p class="project-company text-muted">
+          <article class="project-card fade-in">
+            {/* Visual preview panel */}
+            <div class="preview-panel">
+              {p.id === 'ai-workflow' && <AiWorkflow />}
+              {p.id === 'earnin-card' && <EarninCard />}
+              {p.id === 'account-activity' && <AccountActivity />}
+            </div>
+
+            {/* Content panel */}
+            <div class="content-panel">
+              <div class="content-top">
+                <p class="project-meta text-muted">
                   {p.company} — {p.role}
                 </p>
                 <h2 class="project-name">{p.name}</h2>
+                <div class="tag-row">
+                  {p.tags.map((t) => (
+                    <span class="pill">{t}</span>
+                  ))}
+                </div>
               </div>
-              <div class="tag-row">
-                {p.tags.map((t) => (
-                  <span class="pill">{t}</span>
+
+              <p class="project-desc">{p.description}</p>
+
+              <ul class="highlights">
+                {p.highlights.map((h) => (
+                  <li>
+                    <Fragment set:html={checkIcon} />
+                    {h}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-
-            <p class="project-desc">{p.description}</p>
-
-            <ul class="highlights">
-              {p.highlights.map((h) => (
-                <li>
-                  <Fragment set:html={checkIcon} />
-                  {h}
-                </li>
-              ))}
-            </ul>
           </article>
         ))
       }
@@ -49,61 +60,100 @@ const checkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" s
   .projects-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
+  /* ─── Card ─── */
   .project-card {
-    padding: 2rem;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+    min-height: 280px;
   }
 
-  .project-top {
+  .project-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  html.dark .project-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ─── Preview panel ─── */
+  .preview-panel {
+    position: relative;
+    border-right: 1px solid var(--border);
+    overflow: hidden;
+    background: #0d1117;
+  }
+
+  .preview-panel > :global(*) {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* ─── Content panel ─── */
+  .content-panel {
+    padding: 1.75rem;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
     gap: 1rem;
-    margin-bottom: 1rem;
   }
 
-  .project-company {
-    font-size: 0.8rem;
+  .content-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .project-meta {
+    font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.3rem;
+    letter-spacing: 0.07em;
   }
 
   .project-name {
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
   }
 
   .tag-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    justify-content: flex-end;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
   }
 
   .project-desc {
-    font-size: 0.925rem;
+    font-size: 0.875rem;
     line-height: 1.75;
     color: var(--text-muted);
-    margin-bottom: 1.25rem;
+    flex: 1;
   }
 
   .highlights {
     list-style: none;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem 1.5rem;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
   .highlights li {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.825rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--accent);
   }
@@ -113,13 +163,17 @@ const checkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" s
     flex-shrink: 0;
   }
 
-  @media (max-width: 520px) {
-    .project-top {
-      flex-direction: column;
-      gap: 0.75rem;
+  /* ─── Responsive ─── */
+  @media (max-width: 680px) {
+    .project-card {
+      grid-template-columns: 1fr;
+      min-height: unset;
     }
-    .tag-row {
-      justify-content: flex-start;
+
+    .preview-panel {
+      height: 220px;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
     }
   }
 </style>
