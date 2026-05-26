@@ -448,6 +448,78 @@ footer {
   z-index: 1;
 }
 
+/* ─── Built-with badge ─── */
+.built-badge {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  max-width: 2.4rem;
+  transition-property: max-width, background-color, border-color, box-shadow, scale;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  white-space: nowrap;
+}
+
+.built-badge:hover {
+  max-width: 10rem;
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  text-decoration: none;
+}
+
+html.dark .built-badge {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .built-badge:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.built-badge:active {
+  scale: 0.96;
+}
+
+.built-badge-icon {
+  flex-shrink: 0;
+  letter-spacing: -0.04em;
+}
+
+.built-badge-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  transition-property: opacity, max-width, margin-left;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+  transition-delay: 0.05s;
+}
+
+.built-badge:hover .built-badge-label {
+  opacity: 1;
+  max-width: 6rem;
+  margin-left: 0.45rem;
+}
+
 /* ─── Utilities ─── */
 .text-muted {
   color: var(--text-muted);

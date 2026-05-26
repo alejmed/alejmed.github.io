@@ -54,6 +54,12 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <!-- Background texture -->
     <div class="bg-texture" aria-hidden="true"></div>
 
+    <!-- Built with badge -->
+    <a href="/built-with" class="built-badge" title="How this was built">
+      <span class="built-badge-icon">{ }</span>
+      <span class="built-badge-label">Built with</span>
+    </a>
+
     <Nav />
     <main>
       <slot />
