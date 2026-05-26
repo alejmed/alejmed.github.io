@@ -1,7 +1,5 @@
 ---
 import Nav from '../components/Nav.astro';
-import ViewTransitions from 'astro/components/ViewTransitions.astro';
-import { slide } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -39,21 +37,15 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://alejmed.github.io/og.png" />
 
-    <ViewTransitions />
-
-    <!-- Theme init (prevents flash on first load and after each View Transition swap) -->
+    <!-- Theme init (prevents flash on first load) -->
     <script is:inline>
-      function applyTheme() {
+      (function () {
         const stored = sessionStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (stored === 'dark' || (!stored && prefersDark)) {
           document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
         }
-      }
-      applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
+      })();
     </script>
 
     <!-- GoatCounter analytics: create free account at goatcounter.com with code "alejmed" -->
@@ -71,8 +63,8 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       <a href="/built-with" class="built-badge" aria-label="How this was built">{"{ }"}</a>
     )}
 
-    <Nav transition:persist />
-    <main transition:animate={slide({ duration: '0.22s' })}>
+    <Nav />
+    <main>
       <slot />
     </main>
     <footer>
@@ -87,32 +79,19 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       </div>
     </footer>
 
-    <!-- Page enter + fade-in on scroll -->
+    <!-- Fade-in on scroll -->
     <script>
-      function initFadeIn() {
-        const observer = new IntersectionObserver(
-          (entries) =>
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                observer.unobserve(e.target);
-              }
-            }),
-          { threshold: 0.1 }
-        );
-        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-      }
-
-      function skipFadeIns() {
-        document.querySelectorAll('.fade-in:not(.visible)').forEach((el) => {
-          el.classList.add('no-transition', 'visible');
-          requestAnimationFrame(() => el.classList.remove('no-transition'));
-        });
-      }
-
-      initFadeIn();
-      document.addEventListener('astro:after-swap', skipFadeIns);
-      document.addEventListener('astro:page-load', initFadeIn);
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              observer.unobserve(e.target);
+            }
+          }),
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>

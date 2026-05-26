@@ -464,10 +464,6 @@ footer {
   z-index: 1;
 }
 
-.no-transition,
-.no-transition * {
-  transition: none !important;
-}
 
 /* ─── Built-with badge ─── */
 .built-badge {
