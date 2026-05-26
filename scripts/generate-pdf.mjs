@@ -31,7 +31,7 @@ async function generate(mode) {
     const controls = document.querySelector('.controls');
     if (controls) controls.style.display = 'none';
     // Remove screen padding so card fills the full width
-    const wrap = document.querySelector('.resume-wrap') as HTMLElement | null;
+    const wrap = document.querySelector('.resume-wrap');
     if (wrap) { wrap.style.padding = '0'; wrap.style.maxWidth = 'none'; }
   });
 
