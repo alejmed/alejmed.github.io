@@ -38,7 +38,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://alejmed.github.io/og.png" />
 
-    <ViewTransitions />
+    <ViewTransitions fallback="swap" />
 
     <!-- Theme init (prevents flash on first load and after each swap) -->
     <script is:inline>
@@ -86,32 +86,5 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       </div>
     </footer>
 
-    <!-- Fade-in on scroll -->
-    <script>
-      function initFadeIn() {
-        const observer = new IntersectionObserver(
-          (entries) =>
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                observer.unobserve(e.target);
-              }
-            }),
-          { threshold: 0.1 }
-        );
-        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-      }
-
-      // On navigation, show content instantly — no fade-in repeat
-      document.addEventListener('astro:after-swap', () => {
-        document.querySelectorAll('.fade-in').forEach((el) => {
-          el.style.transition = 'none';
-          el.classList.add('visible');
-        });
-      });
-
-      initFadeIn();
-      document.addEventListener('astro:page-load', initFadeIn);
-    </script>
   </body>
 </html>

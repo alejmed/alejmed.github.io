@@ -389,13 +389,7 @@ footer {
 }
 
 /* ─── Fade-in on scroll ─── */
-.fade-in {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.fade-in.visible {
-  opacity: 1;
-}
+/* intentionally empty — no animation */
 
 /* ─── Background Texture ─── */
 .bg-texture {
@@ -441,10 +435,6 @@ html.dark .bg-texture::after {
 
   .currently-dot {
     animation: none;
-  }
-
-  .fade-in {
-    transition: none;
   }
 }
 
