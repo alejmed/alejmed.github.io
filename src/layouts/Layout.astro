@@ -1,7 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
 import ViewTransitions from 'astro/components/ViewTransitions.astro';
-import { fade } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -72,7 +71,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     )}
 
     <Nav transition:persist />
-    <main transition:animate={fade({ duration: '0.18s' })}>
+    <main>
       <slot />
     </main>
     <footer>
@@ -87,8 +86,16 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       </div>
     </footer>
 
-    <!-- Fade-in on scroll (re-runs after each View Transition) -->
+    <!-- Page enter + fade-in on scroll -->
     <script>
+      function restartMainAnimation() {
+        const main = document.querySelector('main');
+        if (!main) return;
+        main.style.animation = 'none';
+        main.offsetHeight; // force reflow
+        main.style.animation = '';
+      }
+
       function initFadeIn() {
         const observer = new IntersectionObserver(
           (entries) =>
@@ -103,7 +110,18 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
         document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
       }
 
+      function skipFadeIns() {
+        document.querySelectorAll('.fade-in:not(.visible)').forEach((el) => {
+          el.classList.add('no-transition', 'visible');
+          requestAnimationFrame(() => el.classList.remove('no-transition'));
+        });
+      }
+
       initFadeIn();
+      document.addEventListener('astro:after-swap', () => {
+        skipFadeIns();
+        restartMainAnimation();
+      });
       document.addEventListener('astro:page-load', initFadeIn);
     </script>
   </body>

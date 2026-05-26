@@ -442,7 +442,8 @@ html.dark .bg-texture::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  nav {
+  nav,
+  main {
     animation: none;
   }
 
@@ -462,6 +463,26 @@ main,
 footer {
   position: relative;
   z-index: 1;
+}
+
+main {
+  animation: page-enter 0.2s ease-out both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.no-transition,
+.no-transition * {
+  transition: none !important;
 }
 
 /* ─── Built-with badge ─── */
