@@ -5,7 +5,7 @@
   --bg: #f7f6f3;
   --surface: #ffffff;
   --text: #1a1714;
-  --text-muted: #756f68;
+  --text-muted: #6b6460;
   --accent: #2563eb;
   --accent-h: #1d4ed8;
   --border: #e4e1db;
@@ -33,6 +33,11 @@ html.dark {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 html {
   scroll-behavior: smooth;
@@ -479,8 +484,15 @@ html.dark .orb {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb {
+  .orb,
+  .currently-dot {
     animation: none;
+  }
+
+  .fade-in {
+    transform: none;
+    filter: none;
+    transition: opacity 0.3s ease;
   }
 }
 
