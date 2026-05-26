@@ -1,32 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
 <Layout title="Education — Alejandro Blanco">
   <div class="container page-content">
-
-    <header class="page-heading fade-in">
-      <h1>Education</h1>
-    </header>
+    <PageHeader title="Education" />
 
     <div class="edu-card card fade-in">
       <div class="edu-inner">
-        <div class="edu-main">
+        <div>
           <p class="section-label">Bachelor of Science</p>
-          <h2 class="school">California State University,<br class="mobile-br"/> Sacramento</h2>
-          <p class="degree">Computer Science</p>
+          <h2 class="school">California State University, Sacramento</h2>
+          <p class="degree text-muted">Computer Science</p>
         </div>
-        <div class="edu-meta">
-          <span class="year">2021</span>
-        </div>
+        <span class="year">2021</span>
       </div>
     </div>
-
   </div>
 </Layout>
 
 <style>
-  .edu-card { max-width: 620px; padding: 2.25rem 2.5rem; }
+  .edu-card {
+    max-width: 620px;
+    padding: 2.25rem 2.5rem;
+  }
 
   .edu-inner {
     display: flex;
@@ -36,7 +34,7 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .school {
-    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     margin: 0.5rem 0 0.4rem;
@@ -44,7 +42,6 @@ import Layout from '../layouts/Layout.astro';
 
   .degree {
     font-size: 0.9rem;
-    color: var(--text-muted);
     font-weight: 500;
   }
 
@@ -58,11 +55,13 @@ import Layout from '../layouts/Layout.astro';
     white-space: nowrap;
   }
 
-  .mobile-br { display: none; }
-
   @media (max-width: 480px) {
-    .edu-inner { flex-direction: column; gap: 1rem; }
-    .mobile-br { display: block; }
-    .edu-card { padding: 1.5rem; }
+    .edu-card {
+      padding: 1.5rem;
+    }
+    .edu-inner {
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
 </style>

@@ -1,79 +1,60 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { projects } from '../data/projects';
 
-const projects = [
-  {
-    name: 'AI Mobile Development Workflow',
-    role: 'Architect',
-    company: 'EarnIn',
-    tags: ['Internal Tooling', 'Android', 'iOS', 'AI'],
-    description:
-      'Pioneered and architected EarnIn\'s AI-assisted mobile development workflow — covering context management, custom local CI tooling, emulator and simulator automation, and platform-specific best practices for both Android and iOS. The system was adopted team-wide and became the foundation for how the mobile org writes code.',
-    highlights: ['Team-wide adoption', 'Local CI tooling', 'Memory management system'],
-  },
-  {
-    name: 'EarnIn Card',
-    role: 'Cross-Platform Mobile Lead',
-    company: 'EarnIn',
-    tags: ['Android', 'iOS', 'Kotlin', 'Swift'],
-    description:
-      'Led a 7-engineer cross-platform team (3 Android, 4 iOS) to design, build, and launch the EarnIn Card product. Drove scope definition, timelines, and stakeholder alignment from inception through GA. Resulted in 600K+ waitlist signups and over 1M Live Pay transactions post-launch.',
-    highlights: ['600K+ waitlist signups', '1M+ Live Pay transactions', '7-engineer team'],
-  },
-  {
-    name: 'Account Activity',
-    role: 'Android Owner',
-    company: 'EarnIn',
-    tags: ['Android', 'Kotlin', 'Jetpack Compose'],
-    description:
-      'Took full Android ownership of EarnIn\'s ledger-based transaction history system. Defined BE/FE API contracts, authored the engineering design document, built the Jetpack Compose UI, and iterated with product and design through launch.',
-    highlights: ['Full-stack ownership', 'Jetpack Compose UI', 'API contract definition'],
-  },
-];
+const checkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 ---
 
 <Layout title="Projects — Alejandro Blanco">
   <div class="container page-content">
-
-    <header class="page-heading fade-in">
-      <h1>Projects</h1>
-      <p>Work I've led or owned end-to-end.</p>
-    </header>
+    <PageHeader title="Projects" subtitle="Work I've led or owned end-to-end." />
 
     <div class="projects-list">
-      {projects.map((p) => (
-        <article class="project-card card fade-in">
-          <div class="project-top">
-            <div>
-              <p class="project-company text-muted">{p.company} &mdash; {p.role}</p>
-              <h2 class="project-name">{p.name}</h2>
+      {
+        projects.map((p) => (
+          <article class="project-card card fade-in">
+            <div class="project-top">
+              <div>
+                <p class="project-company text-muted">
+                  {p.company} — {p.role}
+                </p>
+                <h2 class="project-name">{p.name}</h2>
+              </div>
+              <div class="tag-row">
+                {p.tags.map((t) => (
+                  <span class="pill">{t}</span>
+                ))}
+              </div>
             </div>
-            <div class="tag-row">
-              {p.tags.map(t => <span class="pill">{t}</span>)}
-            </div>
-          </div>
 
-          <p class="project-desc">{p.description}</p>
+            <p class="project-desc">{p.description}</p>
 
-          <ul class="highlights">
-            {p.highlights.map(h => (
-              <li>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                {h}
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
+            <ul class="highlights">
+              {p.highlights.map((h) => (
+                <li>
+                  <Fragment set:html={checkIcon} />
+                  {h}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
     </div>
-
   </div>
 </Layout>
 
 <style>
-  .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-  .project-card { padding: 2rem; }
+  .project-card {
+    padding: 2rem;
+  }
 
   .project-top {
     display: flex;
@@ -127,10 +108,18 @@ const projects = [
     color: var(--accent);
   }
 
-  .highlights svg { stroke: var(--accent); flex-shrink: 0; }
+  .highlights li :global(svg) {
+    stroke: var(--accent);
+    flex-shrink: 0;
+  }
 
   @media (max-width: 520px) {
-    .project-top { flex-direction: column; gap: 0.75rem; }
-    .tag-row { justify-content: flex-start; }
+    .project-top {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .tag-row {
+      justify-content: flex-start;
+    }
   }
 </style>
