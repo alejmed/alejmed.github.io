@@ -442,8 +442,7 @@ html.dark .bg-texture::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  nav,
-  main {
+  nav {
     animation: none;
   }
 
@@ -465,19 +464,17 @@ footer {
   z-index: 1;
 }
 
-main {
-  animation: page-enter 0.2s ease-out both;
+@keyframes slide-out-left {
+  to { opacity: 0; transform: translateX(-20px); }
 }
-
-@keyframes page-enter {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+}
+@keyframes slide-out-right {
+  to { opacity: 0; transform: translateX(-20px); }
+}
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(20px); }
 }
 
 .no-transition,

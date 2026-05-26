@@ -71,7 +71,16 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     )}
 
     <Nav transition:persist />
-    <main>
+    <main transition:animate={{
+      forwards: {
+        old: { name: 'slide-out-left', duration: '0.18s', easing: 'ease-in', fillMode: 'both' },
+        new: { name: 'slide-in-right', duration: '0.22s', easing: 'ease-out', fillMode: 'both' },
+      },
+      backwards: {
+        old: { name: 'slide-out-right', duration: '0.18s', easing: 'ease-in', fillMode: 'both' },
+        new: { name: 'slide-in-left', duration: '0.22s', easing: 'ease-out', fillMode: 'both' },
+      },
+    }}>
       <slot />
     </main>
     <footer>
@@ -88,14 +97,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Page enter + fade-in on scroll -->
     <script>
-      function restartMainAnimation() {
-        const main = document.querySelector('main');
-        if (!main) return;
-        main.style.animation = 'none';
-        main.offsetHeight; // force reflow
-        main.style.animation = '';
-      }
-
       function initFadeIn() {
         const observer = new IntersectionObserver(
           (entries) =>
@@ -118,10 +119,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       }
 
       initFadeIn();
-      document.addEventListener('astro:after-swap', () => {
-        skipFadeIns();
-        restartMainAnimation();
-      });
+      document.addEventListener('astro:after-swap', skipFadeIns);
       document.addEventListener('astro:page-load', initFadeIn);
     </script>
   </body>
