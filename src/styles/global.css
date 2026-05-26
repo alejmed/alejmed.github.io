@@ -445,11 +445,6 @@ footer {
   z-index: 1;
 }
 
-/* Disable all View Transitions animations — SPA routing only, no visual effect */
-::view-transition-old(*),
-::view-transition-new(*) {
-  animation: none !important;
-}
 
 
 /* ─── Built-with badge ─── */
