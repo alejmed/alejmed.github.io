@@ -455,6 +455,12 @@ footer {
   z-index: 1;
 }
 
+/* Disable all View Transitions animations — SPA routing only, no visual effect */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
 
 /* ─── Built-with badge ─── */
 .built-badge {

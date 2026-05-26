@@ -1,5 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
+import ViewTransitions from 'astro/components/ViewTransitions.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -37,15 +38,21 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://alejmed.github.io/og.png" />
 
-    <!-- Theme init (prevents flash on first load) -->
+    <ViewTransitions />
+
+    <!-- Theme init (prevents flash on first load and after each swap) -->
     <script is:inline>
-      (function () {
+      function applyTheme() {
         const stored = sessionStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (stored === 'dark' || (!stored && prefersDark)) {
           document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
         }
-      })();
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
     </script>
 
     <!-- GoatCounter analytics: create free account at goatcounter.com with code "alejmed" -->
@@ -63,8 +70,8 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       <a href="/built-with" class="built-badge" aria-label="How this was built">{"{ }"}</a>
     )}
 
-    <Nav />
-    <main>
+    <Nav transition:persist />
+    <main transition:animate="none">
       <slot />
     </main>
     <footer>
@@ -81,17 +88,21 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Fade-in on scroll -->
     <script>
-      const observer = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add('visible');
-              observer.unobserve(e.target);
-            }
-          }),
-        { threshold: 0.1 }
-      );
-      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+      function initFadeIn() {
+        const observer = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+              }
+            }),
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+      }
+      initFadeIn();
+      document.addEventListener('astro:page-load', initFadeIn);
     </script>
   </body>
 </html>
