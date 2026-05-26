@@ -53,7 +53,7 @@ async function generate(mode) {
   });
 
   await browser.close();
-  console.log(`Generated dist/resume-${mode}.pdf (${height}px tall)`);
+  console.log(`Generated dist/resume-${mode}.pdf (${pdfWidth}x${pdfHeight}px)`);
 }
 
 await generate('light');
