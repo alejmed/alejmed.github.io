@@ -31,10 +31,11 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     <div class="nav-right">
       <a
-        href="/resume"
+        href="/resume.pdf"
+        download="Alejandro_Blanco_Resume.pdf"
         class="btn-download"
-        title="View Resume"
-        aria-label="View Resume"
+        title="Download Resume"
+        aria-label="Download Resume"
       >
         <svg
           width="15"
@@ -81,8 +82,8 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
       </a>
     ))
   }
-  <a href="/resume" class="mobile-download">
-    Resume
+  <a href="/resume.pdf" download="Alejandro_Blanco_Resume.pdf" class="mobile-download">
+    Download Resume
   </a>
 </div>
 
