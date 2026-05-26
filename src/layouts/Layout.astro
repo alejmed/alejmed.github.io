@@ -40,9 +40,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <!-- Theme init (prevents flash) -->
     <script is:inline>
       const saved = localStorage.getItem('theme');
-      const dark =
-        saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      if (dark) document.documentElement.classList.add('dark');
+      const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (saved === null && osDark))
+        document.documentElement.classList.add('dark');
     </script>
 
     <!-- GoatCounter analytics — create free account at goatcounter.com with code "alejmed" -->
