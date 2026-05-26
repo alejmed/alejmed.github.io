@@ -1,0 +1,97 @@
+---
+interface Props {
+  screenshots: string[];   // paths like /screenshots/earnin-card/01.png
+  alt: string;
+}
+const { screenshots, alt } = Astro.props;
+const hasShots = screenshots.length > 0;
+---
+
+{hasShots && (
+  <div class="gallery-wrap">
+    <div class="gallery-track">
+      {screenshots.map((src, i) => (
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <img src={src} alt={`${alt} screenshot ${i + 1}`} loading="lazy" />
+        </div>
+      ))}
+    </div>
+    {screenshots.length > 2 && (
+      <div class="gallery-fade" aria-hidden="true"></div>
+    )}
+  </div>
+)}
+
+<style>
+  .gallery-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #1a1f2e 0%, #0d1117 100%);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .gallery-track {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    align-items: center;
+    scrollbar-width: none;
+    height: 100%;
+    width: 100%;
+  }
+
+  .gallery-track::-webkit-scrollbar { display: none; }
+
+  /* Phone frame */
+  .phone-frame {
+    position: relative;
+    flex-shrink: 0;
+    width: 115px;
+    height: calc(100% - 2rem);
+    min-height: 200px;
+    background: #000;
+    border-radius: 18px;
+    border: 5px solid #2a2a2e;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.06),
+      0 8px 32px rgba(0,0,0,0.5),
+      inset 0 0 0 1px rgba(255,255,255,0.04);
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 38px;
+    height: 6px;
+    background: #2a2a2e;
+    border-radius: 0 0 6px 6px;
+    z-index: 2;
+  }
+
+  .phone-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  /* Fade hint for scroll */
+  .gallery-fade {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(13, 17, 23, 0.8));
+    pointer-events: none;
+  }
+</style>

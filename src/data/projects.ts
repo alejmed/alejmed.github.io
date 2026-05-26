@@ -17,7 +17,7 @@ export const projects: Project[] = [
     company: 'EarnIn',
     tags: ['Internal Tooling', 'Android', 'iOS', 'AI'],
     description:
-      "Pioneered and architected EarnIn's AI-assisted mobile development workflow — covering context management, custom local CI tooling, emulator and simulator automation, and platform-specific best practices for both Android and iOS. Adopted team-wide as the foundation for how the mobile org writes code.",
+      "Pioneered and architected EarnIn's AI-assisted mobile development workflow, covering context management, custom local CI tooling, emulator and simulator automation, and platform-specific best practices for both Android and iOS. Adopted team-wide as the foundation for how the mobile org writes code.",
     highlights: ['Team-wide adoption', 'Local CI tooling', 'Memory management system'],
     screenshots: [],  // internal tool — terminal mockup used instead
   },
@@ -28,7 +28,7 @@ export const projects: Project[] = [
     company: 'EarnIn',
     tags: ['Android', 'iOS', 'Kotlin', 'Swift'],
     description:
-      'Led a 7-engineer cross-platform team (3 Android, 4 iOS) to design, build, and launch the EarnIn Card. Drove scope definition, timelines, and stakeholder alignment from inception through GA — resulting in 600K+ waitlist signups and 1M+ Live Pay transactions post-launch.',
+      'Led a 7-engineer cross-platform team (3 Android, 4 iOS) to design, build, and launch the EarnIn Card. Drove scope definition, timelines, and stakeholder alignment from inception through GA, resulting in 600K+ waitlist signups and 1M+ Live Pay transactions post-launch.',
     highlights: ['600K+ waitlist signups', '1M+ Live Pay transactions', '7-engineer team'],
     // Drop screenshots into public/screenshots/earnin-card/ named 01.png, 02.png, etc.
     screenshots: [],

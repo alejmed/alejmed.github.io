@@ -8,7 +8,7 @@ export interface SkillGroup {
 export const skillGroups: SkillGroup[] = [
   {
     category: 'Mobile',
-    description: 'My core platform — Android-first with solid iOS depth.',
+    description: 'My core platform, Android-first with solid iOS depth.',
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="1" fill="currentColor" stroke="none"/></svg>`,
     skills: ['Kotlin', 'Jetpack Compose', 'Android SDK', 'MVVM', 'Dagger', 'Swift'],
   },

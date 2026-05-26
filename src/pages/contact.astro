@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Contact — Alejandro Blanco"
-  description="Get in touch with Alejandro Blanco — Senior Mobile Software Engineer."
+  title="Contact | Alejandro Blanco"
+  description="Get in touch with Alejandro Blanco, Senior Mobile Software Engineer."
 >
   <div class="container page-content">
     <header class="page-heading fade-in">
@@ -122,7 +122,7 @@ import Layout from '../layouts/Layout.astro';
 
       if (res.ok) {
         form.reset();
-        msg.textContent = "Message sent — I'll get back to you soon.";
+        msg.textContent = "Message sent. I'll get back to you soon.";
         msg.className = 'form-msg success';
         btn.textContent = 'Sent!';
       } else {
