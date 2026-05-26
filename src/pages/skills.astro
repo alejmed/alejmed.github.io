@@ -10,14 +10,28 @@ import { skillGroups } from '../data/skills';
 
     <div class="skills-grid">
       {
-        skillGroups.map((group) => (
-          <div class="skill-card card fade-in">
-            <p class="section-label">{group.category}</p>
+        skillGroups.map((group, i) => (
+          <div class={`skill-card card fade-in${i === 0 ? ' card-featured' : ''}`}>
+            <div class="card-header">
+              <div class="icon-wrap">
+                <Fragment set:html={group.icon} />
+              </div>
+              <div>
+                <p class="category-name">{group.category}</p>
+                <p class="category-desc">{group.description}</p>
+              </div>
+            </div>
+            <div class="card-divider" />
             <div class="pill-group">
               {group.skills.map((s) => (
                 <span class="pill">{s}</span>
               ))}
             </div>
+            {i === 0 && (
+              <div class="watermark" aria-hidden="true">
+                <Fragment set:html={group.icon} />
+              </div>
+            )}
           </div>
         ))
       }
@@ -28,25 +42,97 @@ import { skillGroups } from '../data/skills';
 <style>
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
 
+  /* ─── Card base ─── */
   .skill-card {
     padding: 1.5rem 1.75rem;
+    position: relative;
+    overflow: hidden;
   }
 
-  .skill-card .section-label {
-    margin-bottom: 1rem;
+  /* ─── Featured (Mobile) card ─── */
+  .card-featured {
+    grid-column: 1 / -1;
+    background: linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--accent) 5%, var(--surface)) 0%,
+      var(--surface) 55%
+    );
+    border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
   }
 
+  /* ─── Card header ─── */
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+
+  .icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .category-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+  }
+
+  .category-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ─── Divider ─── */
+  .card-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.1rem 0 1rem;
+  }
+
+  /* ─── Pills ─── */
   .pill-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
 
-  @media (max-width: 480px) {
+  /* ─── Watermark ─── */
+  .watermark {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1rem;
+    width: 88px;
+    height: 88px;
+    color: var(--accent);
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .watermark :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.5;
+  }
+
+  @media (max-width: 540px) {
     .skills-grid {
       grid-template-columns: 1fr;
     }
