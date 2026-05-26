@@ -455,29 +455,31 @@ footer {
   right: 1.5rem;
   z-index: 50;
   font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #5aaa56;
+  color: #3d8c3a;
   text-decoration: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
   transition-property: color, scale;
   transition-duration: 0.15s;
   transition-timing-function: ease-out;
-  line-height: 1;
 }
 
 html.dark .built-badge {
-  color: #6dcc69;
+  color: #72e06e;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
 }
 
 .built-badge:hover {
-  color: #3d8a39;
+  color: #2a6327;
   text-decoration: none;
-  scale: 1.1;
+  scale: 1.12;
 }
 
 html.dark .built-badge:hover {
-  color: #8fe08c;
+  color: #96eda3;
 }
 
 .built-badge:active {
