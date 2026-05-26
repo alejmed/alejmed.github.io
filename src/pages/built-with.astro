@@ -4,71 +4,98 @@ import PageHeader from '../components/PageHeader.astro';
 
 const githubIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>`;
 
+const aiSkills = [
+  {
+    name: 'Claude Code',
+    role: 'Coding agent',
+    url: 'https://claude.ai/code',
+    repoLabel: 'claude.ai/code',
+    repoUrl: 'https://claude.ai/code',
+    detail: 'Anthropic\'s agentic CLI. Used for the full build loop: scaffolding pages, writing and editing TypeScript data models, tuning CSS, and iterating on design. Every change was reviewed and directed.',
+  },
+  {
+    name: 'ui-ux-pro-max',
+    role: 'Claude skill',
+    url: 'https://github.com/alejmed/Amadeus',
+    repoLabel: 'alejmed/Amadeus',
+    repoUrl: 'https://github.com/alejmed/Amadeus',
+    detail: 'Custom Claude skill that generates a complete design system from product keywords. Drove the color token decisions, dark mode palette, typography scale, and spacing — run once at project start.',
+  },
+  {
+    name: 'make-interfaces-feel-better',
+    role: 'Claude skill',
+    url: 'https://github.com/alejmed/Amadeus',
+    repoLabel: 'alejmed/Amadeus',
+    repoUrl: 'https://github.com/alejmed/Amadeus',
+    detail: 'Custom Claude skill encoding 16 named UI polish principles. Ran a full audit pass: font smoothing, concentric border radii, transition specificity, hit area minimums, scale-on-press, and reduced-motion fallbacks.',
+  },
+];
+
 const stack = [
   {
     name: 'Astro',
     url: 'https://astro.build',
     role: 'Framework',
-    detail: 'Static site generator with zero client-side JS by default. Pages are pre-rendered at build time — no React hydration overhead, no bundle bloat.',
+    detail: 'Zero client-side JS by default. Pages pre-render at build time — no hydration, no bundle to ship.',
   },
   {
     name: 'TypeScript',
     url: 'https://www.typescriptlang.org',
     role: 'Language',
-    detail: 'Typed data models for every content type: Project, Job, Role, SkillGroup. Catches schema drift before it reaches a build.',
+    detail: 'Typed interfaces for every content type: Project, Job, Role, SkillGroup. Schema changes fail at build, not at runtime.',
   },
   {
     name: 'CSS Custom Properties',
     url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties',
     role: 'Design system',
-    detail: 'Hand-rolled design token system: --bg, --surface, --text, --accent, --border, --shadow, --radius. All theming flows through one layer, no CSS-in-JS needed.',
+    detail: 'Hand-rolled design token layer: --bg, --surface, --text, --accent, --border, --shadow, --radius. No CSS-in-JS, no Tailwind config — one file, one source of truth.',
   },
   {
     name: 'GitHub Actions',
     url: 'https://github.com/features/actions',
     role: 'CI/CD',
-    detail: 'Automated build and deploy pipeline. Every push to main triggers an Astro build and deploys to GitHub Pages — zero manual steps.',
+    detail: 'Push to main, get a deploy. Astro build runs in CI — broken builds don\'t ship.',
   },
   {
     name: 'GitHub Pages',
     url: 'https://pages.github.com',
     role: 'Hosting',
-    detail: 'Static hosting directly from the repository. No server, no database, no cold starts.',
+    detail: 'Static hosting from the repo. No server, no cold starts, no infra to manage.',
   },
 ];
 
 const decisions = [
   {
     label: 'OS-native dark mode',
-    detail: 'Reads prefers-color-scheme on load via an inline script that runs before first paint — no flash, no localStorage, no state to sync. The toggle is session-only; OS preference is always the ground truth.',
+    detail: 'prefers-color-scheme read by an inline script before first paint. No flash, no localStorage, no state to sync. The toggle is session-only — OS preference is always ground truth.',
   },
   {
     label: 'WCAG AA contrast',
-    detail: 'Every text color passes 4.5:1 against its background. --text-muted was tuned from #756f68 (4.39:1, failing) to #6b6460 (5.16:1, passing) at small text sizes.',
+    detail: '--text-muted tuned from #756f68 (4.39:1, failing) to #6b6460 (5.16:1, passing) against the light background at small text sizes.',
   },
   {
-    label: 'Reduced motion support',
-    detail: 'prefers-reduced-motion disables the blur/translate fade-in, background orb animations, and the pulsing dot. Transitions fall back to a simple opacity fade.',
+    label: 'Reduced motion',
+    detail: 'prefers-reduced-motion disables blur/translate fade-ins, orb animations, and the pulsing dot. Transitions fall back to opacity only.',
   },
   {
     label: 'Concentric border radii',
-    detail: 'Nested surfaces use outer = inner + padding. Matching radii on parent/child cards is the most common thing that makes interfaces feel off.',
+    detail: 'Nested surfaces: outer radius = inner radius + padding. Mismatched radii on parent/child elements is the most common thing that makes interfaces feel cheap.',
   },
   {
-    label: 'Scale-on-press feedback',
-    detail: 'All interactive elements apply scale: 0.96 on :active. The value is intentional — anything below 0.95 feels exaggerated on desktop.',
+    label: 'Scale on press',
+    detail: 'scale: 0.96 on :active for all interactive elements. 0.96 is the ceiling — anything below 0.95 reads as exaggerated on desktop.',
   },
   {
     label: 'Transition specificity',
-    detail: 'No transition: all anywhere. Every transition names exact properties (background-color, border-color, scale, opacity) so unrelated layout changes are never animated unintentionally.',
+    detail: 'No transition: all. Every transition lists exact properties (background-color, border-color, scale) so layout changes are never accidentally animated.',
   },
   {
     label: 'Focus visibility',
-    detail: ':focus-visible outlines on all interactive elements for keyboard navigation. :focus-visible (not :focus) ensures the ring only appears for keyboard users, not mouse clicks.',
+    detail: ':focus-visible, not :focus. Keyboard users get a visible ring; mouse users don\'t. Two different interaction modes, two different states.',
   },
   {
-    label: 'Staggered hero entrance',
-    detail: 'Each hero element has its own transition-delay (0 / 100 / 200 / 300ms) applied inline. The container does not animate — only the semantic chunks do.',
+    label: 'Staggered hero',
+    detail: 'transition-delay set per element (0 / 100 / 200 / 300ms), not on a wrapper. Each semantic chunk animates independently so individual delays are meaningful.',
   },
 ];
 ---
@@ -77,15 +104,10 @@ const decisions = [
   <div class="container page-content">
     <PageHeader
       title="Built with"
-      subtitle="This site is an engineering project, not a template."
+      subtitle="The same Claude Code workflow from the Projects page built this site."
     />
 
     <section class="intro fade-in">
-      <p class="intro-text">
-        Every detail here was a deliberate decision. The goal was to build something that
-        demonstrates the same engineering discipline I apply at work: typed data models,
-        accessibility compliance, performance constraints, and no unnecessary abstractions.
-      </p>
       <a
         href="https://github.com/alejmed/alejmed.github.io"
         target="_blank"
@@ -100,15 +122,34 @@ const decisions = [
     <div class="divider"></div>
 
     <section class="fade-in">
+      <p class="section-label">AI workflow</p>
+      <div class="ai-list">
+        {aiSkills.map((item) => (
+          <div class="ai-card">
+            <div class="ai-header">
+              <span class="ai-name">{item.name}</span>
+              <span class="stack-role">{item.role}</span>
+              <a href={item.repoUrl} target="_blank" rel="noopener" class="ai-repo">
+                <Fragment set:html={githubIcon} />
+                {item.repoLabel}
+              </a>
+            </div>
+            <p class="ai-detail">{item.detail}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="fade-in">
       <p class="section-label">Stack</p>
       <div class="stack-list">
         {stack.map((item) => (
           <div class="stack-card">
             <div class="stack-header">
-              <div>
-                <a href={item.url} target="_blank" rel="noopener" class="stack-name">{item.name}</a>
-                <span class="stack-role">{item.role}</span>
-              </div>
+              <a href={item.url} target="_blank" rel="noopener" class="stack-name">{item.name}</a>
+              <span class="stack-role">{item.role}</span>
             </div>
             <p class="stack-detail">{item.detail}</p>
           </div>
@@ -119,7 +160,7 @@ const decisions = [
     <div class="divider"></div>
 
     <section class="fade-in">
-      <p class="section-label">Engineering decisions</p>
+      <p class="section-label">Design decisions</p>
       <div class="decisions-list">
         {decisions.map((d) => (
           <div class="decision-row">
@@ -135,17 +176,7 @@ const decisions = [
 <style>
   .intro {
     display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
     align-items: flex-start;
-  }
-
-  .intro-text {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--text-muted);
-    max-width: 620px;
-    margin: 0;
   }
 
   .source-link {
@@ -175,11 +206,73 @@ const decisions = [
     scale: 0.96;
   }
 
+  /* AI workflow */
+  .ai-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .ai-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .ai-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  }
+
+  .ai-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .ai-name {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .ai-repo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: auto;
+    transition-property: color;
+    transition-duration: 0.15s;
+  }
+
+  .ai-repo:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .ai-detail {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
   /* Stack */
   .stack-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.75rem;
     margin-top: 1rem;
   }
 
@@ -187,10 +280,10 @@ const decisions = [
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.25rem;
+    padding: 1.1rem 1.25rem;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.5rem;
     transition: border-color 0.2s;
   }
 
@@ -200,16 +293,19 @@ const decisions = [
 
   .stack-header {
     display: flex;
-    align-items: baseline;
-    gap: 0.65rem;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
   }
 
   .stack-name {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--text);
     text-decoration: none;
+    transition-property: color;
+    transition-duration: 0.15s;
   }
 
   .stack-name:hover {
@@ -218,15 +314,16 @@ const decisions = [
   }
 
   .stack-role {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--accent);
     background: color-mix(in srgb, var(--accent) 10%, transparent);
-    padding: 0.1rem 0.45rem;
+    padding: 0.1rem 0.4rem;
     border-radius: 999px;
     border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    white-space: nowrap;
   }
 
   .stack-detail {
@@ -248,9 +345,9 @@ const decisions = [
 
   .decision-row {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 190px 1fr;
     gap: 1rem;
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border-bottom: 1px solid var(--border);
     transition: background-color 0.15s;
   }
@@ -265,7 +362,7 @@ const decisions = [
 
   .decision-label {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     font-weight: 600;
     color: var(--text);
     margin: 0;
@@ -273,7 +370,7 @@ const decisions = [
   }
 
   .decision-detail {
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     line-height: 1.65;
     color: var(--text-muted);
     margin: 0;
@@ -286,7 +383,11 @@ const decisions = [
 
     .decision-row {
       grid-template-columns: 1fr;
-      gap: 0.35rem;
+      gap: 0.3rem;
+    }
+
+    .ai-repo {
+      margin-left: 0;
     }
   }
 </style>
