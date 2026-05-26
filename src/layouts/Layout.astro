@@ -1,0 +1,70 @@
+---
+import Nav from '../components/Nav.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Senior Mobile Software Engineer. Building consumer fintech at EarnIn.',
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- OG / Social -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://alejmed.github.io/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://alejmed.github.io/og.png" />
+
+  <!-- Theme init (prevents flash) -->
+  <script is:inline>
+    const saved = localStorage.getItem('theme');
+    const dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    if (dark) document.documentElement.classList.add('dark');
+  </script>
+
+  <!-- GoatCounter analytics — create free account at goatcounter.com with code "alejmed" -->
+  <script data-goatcounter="https://alejmed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <Nav />
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <div class="container">
+      <p>Alejandro Blanco &copy; {new Date().getFullYear()} &mdash; Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p>
+    </div>
+  </footer>
+
+  <!-- Fade-in on scroll -->
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

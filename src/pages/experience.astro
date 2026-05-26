@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const jobs = [
+  {
+    company: 'EarnIn',
+    location: 'Palo Alto, CA · Remote',
+    roles: [
+      {
+        title: 'Senior Software Engineer',
+        period: 'Aug 2022 – Present',
+        bullets: [
+          '<strong>AI Mobile Lead:</strong> Architected EarnIn\'s AI-assisted mobile development workflow — memory management system, custom local CI tooling, emulator/simulator automation, and iOS/Android best practices. Adopted team-wide.',
+          'Led 7-engineer cross-platform team (3 Android, 4 iOS) to launch and GA the EarnIn Card, driving 600K+ waitlist signups and 1M+ Live Pay transactions post-launch.',
+          'Built Account Activity: full Android ownership of EarnIn\'s ledger-based transaction system, covering BE/FE contracts, engineering design, Jetpack Compose UI, and product/design iteration.',
+          'Defined scope, timelines, and stakeholder alignment across multiple product initiatives; drove API contract definition across product, design, and backend teams.',
+        ],
+      },
+    ],
+  },
+  {
+    company: 'eBay',
+    location: 'San Jose, CA',
+    roles: [
+      {
+        title: 'Software Developer (AWF)',
+        period: 'Sep 2021 – Aug 2022',
+        bullets: [
+          'Identified and resolved backend bugs across high-traffic Buyer Experience purchase flows.',
+          'Assisted migration of legacy Spring services to Spring Boot, modernizing backend architecture.',
+          'Updated and validated Jenkins CI/CD job configurations to ensure correct pipeline behavior post-migration.',
+          'Monitored Grafana dashboards during rollouts to verify metrics aligned with expected baselines.',
+        ],
+      },
+    ],
+  },
+];
+---
+
+<Layout title="Experience — Alejandro Blanco">
+  <div class="container page-content">
+
+    <header class="page-heading fade-in">
+      <h1>Experience</h1>
+      <p>4+ years building consumer products at scale.</p>
+    </header>
+
+    <div class="timeline">
+      {jobs.map((job, ji) => (
+        <div class="job fade-in">
+          <div class="job-header">
+            <div>
+              <h2 class="company">{job.company}</h2>
+              <p class="location text-muted">{job.location}</p>
+            </div>
+          </div>
+
+          {job.roles.map((role, ri) => (
+            <div class="role">
+              <div class="role-meta">
+                <span class="role-title">{role.title}</span>
+                <span class="role-period text-muted">{role.period}</span>
+              </div>
+              <ul class="bullets">
+                {role.bullets.map(b => (
+                  <li set:html={b} />
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+
+  </div>
+</Layout>
+
+<style>
+  .timeline { display: flex; flex-direction: column; gap: 2.5rem; }
+
+  .job {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s;
+  }
+  .job:hover { border-color: color-mix(in srgb, var(--accent) 25%, var(--border)); }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .company {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .location {
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+  }
+
+  .role { margin-top: 1.25rem; }
+  .role + .role { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+
+  .role-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .role-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .role-period { font-size: 0.82rem; }
+
+  .bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .bullets li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: 0.925rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .bullets li strong { color: var(--text); font-weight: 500; }
+</style>
