@@ -451,41 +451,33 @@ footer {
 /* ─── Built-with badge ─── */
 .built-badge {
   position: fixed;
-  bottom: 1.25rem;
-  right: 1.25rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
   z-index: 50;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  font-size: 0.7rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
-  border-radius: 10px;
+  color: #5aaa56;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition-property: background-color, border-color, box-shadow, scale;
+  letter-spacing: -0.02em;
+  transition-property: color, scale;
   transition-duration: 0.15s;
   transition-timing-function: ease-out;
-}
-
-.built-badge:hover {
-  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  text-decoration: none;
+  line-height: 1;
 }
 
 html.dark .built-badge {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  color: #6dcc69;
+}
+
+.built-badge:hover {
+  color: #3d8a39;
+  text-decoration: none;
+  scale: 1.1;
 }
 
 html.dark .built-badge:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  color: #8fe08c;
 }
 
 .built-badge:active {
