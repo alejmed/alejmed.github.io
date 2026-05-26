@@ -391,17 +391,10 @@ footer {
 /* ─── Fade-in on scroll ─── */
 .fade-in {
   opacity: 0;
-  transform: translateY(12px);
-  filter: blur(4px);
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease,
-    filter 0.5s ease;
+  transition: opacity 0.4s ease;
 }
 .fade-in.visible {
   opacity: 1;
-  transform: none;
-  filter: blur(0);
 }
 
 /* ─── Background Texture ─── */
@@ -451,9 +444,7 @@ html.dark .bg-texture::after {
   }
 
   .fade-in {
-    transform: none;
-    filter: none;
-    transition: opacity 0.3s ease;
+    transition: none;
   }
 }
 
