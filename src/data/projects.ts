@@ -46,16 +46,4 @@ export const projects: Project[] = [
     // Drop screenshots into public/screenshots/account-activity/ named 01.png, 02.png, etc.
     screenshots: [],
   },
-  {
-    id: 'this-portfolio',
-    name: 'This Portfolio',
-    role: 'Designer & Engineer',
-    company: 'Personal',
-    tags: ['Astro', 'TypeScript', 'CSS', 'GitHub Actions', 'GitHub Pages'],
-    description:
-      'Designed and engineered from scratch — not just prompted. Built on Astro with a hand-written CSS design system using custom properties for theming, TypeScript for the typed data layer, and GitHub Actions for CI/CD. Specific decisions throughout: WCAG AA contrast ratios, OS-synced dark mode via matchMedia, blur fade-in animations that respect prefers-reduced-motion, scale-on-press button feedback, and concentric border radii. The commit history is public.',
-    highlights: ['WCAG AA accessible', 'Custom CSS design system', 'GitHub Actions CI/CD'],
-    screenshots: [],
-    repoUrl: 'https://github.com/alejmed/alejmed.github.io',
-  },
 ];

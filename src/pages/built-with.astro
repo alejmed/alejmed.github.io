@@ -1,0 +1,292 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const githubIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>`;
+
+const stack = [
+  {
+    name: 'Astro',
+    url: 'https://astro.build',
+    role: 'Framework',
+    detail: 'Static site generator with zero client-side JS by default. Pages are pre-rendered at build time — no React hydration overhead, no bundle bloat.',
+  },
+  {
+    name: 'TypeScript',
+    url: 'https://www.typescriptlang.org',
+    role: 'Language',
+    detail: 'Typed data models for every content type: Project, Job, Role, SkillGroup. Catches schema drift before it reaches a build.',
+  },
+  {
+    name: 'CSS Custom Properties',
+    url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties',
+    role: 'Design system',
+    detail: 'Hand-rolled design token system: --bg, --surface, --text, --accent, --border, --shadow, --radius. All theming flows through one layer, no CSS-in-JS needed.',
+  },
+  {
+    name: 'GitHub Actions',
+    url: 'https://github.com/features/actions',
+    role: 'CI/CD',
+    detail: 'Automated build and deploy pipeline. Every push to main triggers an Astro build and deploys to GitHub Pages — zero manual steps.',
+  },
+  {
+    name: 'GitHub Pages',
+    url: 'https://pages.github.com',
+    role: 'Hosting',
+    detail: 'Static hosting directly from the repository. No server, no database, no cold starts.',
+  },
+];
+
+const decisions = [
+  {
+    label: 'OS-native dark mode',
+    detail: 'Reads prefers-color-scheme on load via an inline script that runs before first paint — no flash, no localStorage, no state to sync. The toggle is session-only; OS preference is always the ground truth.',
+  },
+  {
+    label: 'WCAG AA contrast',
+    detail: 'Every text color passes 4.5:1 against its background. --text-muted was tuned from #756f68 (4.39:1, failing) to #6b6460 (5.16:1, passing) at small text sizes.',
+  },
+  {
+    label: 'Reduced motion support',
+    detail: 'prefers-reduced-motion disables the blur/translate fade-in, background orb animations, and the pulsing dot. Transitions fall back to a simple opacity fade.',
+  },
+  {
+    label: 'Concentric border radii',
+    detail: 'Nested surfaces use outer = inner + padding. Matching radii on parent/child cards is the most common thing that makes interfaces feel off.',
+  },
+  {
+    label: 'Scale-on-press feedback',
+    detail: 'All interactive elements apply scale: 0.96 on :active. The value is intentional — anything below 0.95 feels exaggerated on desktop.',
+  },
+  {
+    label: 'Transition specificity',
+    detail: 'No transition: all anywhere. Every transition names exact properties (background-color, border-color, scale, opacity) so unrelated layout changes are never animated unintentionally.',
+  },
+  {
+    label: 'Focus visibility',
+    detail: ':focus-visible outlines on all interactive elements for keyboard navigation. :focus-visible (not :focus) ensures the ring only appears for keyboard users, not mouse clicks.',
+  },
+  {
+    label: 'Staggered hero entrance',
+    detail: 'Each hero element has its own transition-delay (0 / 100 / 200 / 300ms) applied inline. The container does not animate — only the semantic chunks do.',
+  },
+];
+---
+
+<Layout title="Built with | Alejandro Blanco">
+  <div class="container page-content">
+    <PageHeader
+      title="Built with"
+      subtitle="This site is an engineering project, not a template."
+    />
+
+    <section class="intro fade-in">
+      <p class="intro-text">
+        Every detail here was a deliberate decision. The goal was to build something that
+        demonstrates the same engineering discipline I apply at work: typed data models,
+        accessibility compliance, performance constraints, and no unnecessary abstractions.
+      </p>
+      <a
+        href="https://github.com/alejmed/alejmed.github.io"
+        target="_blank"
+        rel="noopener"
+        class="source-link"
+      >
+        <Fragment set:html={githubIcon} />
+        View source on GitHub
+      </a>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="fade-in">
+      <p class="section-label">Stack</p>
+      <div class="stack-list">
+        {stack.map((item) => (
+          <div class="stack-card">
+            <div class="stack-header">
+              <div>
+                <a href={item.url} target="_blank" rel="noopener" class="stack-name">{item.name}</a>
+                <span class="stack-role">{item.role}</span>
+              </div>
+            </div>
+            <p class="stack-detail">{item.detail}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="fade-in">
+      <p class="section-label">Engineering decisions</p>
+      <div class="decisions-list">
+        {decisions.map((d) => (
+          <div class="decision-row">
+            <p class="decision-label">{d.label}</p>
+            <p class="decision-detail">{d.detail}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    max-width: 620px;
+    margin: 0;
+  }
+
+  .source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    transition-property: background-color, border-color, scale;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+  }
+
+  .source-link:hover {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    text-decoration: none;
+  }
+
+  .source-link:active {
+    scale: 0.96;
+  }
+
+  /* Stack */
+  .stack-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .stack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: border-color 0.2s;
+  }
+
+  .stack-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  }
+
+  .stack-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+  }
+
+  .stack-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .stack-name:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .stack-role {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+
+  .stack-detail {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Decisions */
+  .decisions-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .decision-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.15s;
+  }
+
+  .decision-row:last-child {
+    border-bottom: none;
+  }
+
+  .decision-row:hover {
+    background: color-mix(in srgb, var(--accent) 4%, var(--surface));
+  }
+
+  .decision-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+    padding-top: 0.05rem;
+  }
+
+  .decision-detail {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .stack-list {
+      grid-template-columns: 1fr;
+    }
+
+    .decision-row {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+  }
+</style>
