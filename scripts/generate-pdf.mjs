@@ -14,7 +14,8 @@ async function generate(mode) {
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 816, height: 1056 });
+  // Wide viewport so content renders at its natural width (max-width: 820px)
+  await page.setViewport({ width: 1200, height: 1056 });
   await page.emulateMediaType('screen');
 
   // Let the page's own theme script detect OS preference
@@ -37,16 +38,16 @@ async function generate(mode) {
     if (wrap) wrap.style.padding = '1.5rem 1.5rem 1.5rem';
   });
 
-  // Measure content height for a single-page PDF
-  const height = await page.evaluate(() => {
-    const wrap = document.querySelector('.resume-wrap');
-    return (wrap ?? document.body).scrollHeight;
+  // Measure rendered dimensions for a single-page, no-clip PDF
+  const { pdfWidth, pdfHeight } = await page.evaluate(() => {
+    const wrap = document.querySelector('.resume-wrap') ?? document.body;
+    return { pdfWidth: wrap.scrollWidth, pdfHeight: wrap.scrollHeight };
   });
 
   await page.pdf({
     path: resolve(`dist/resume-${mode}.pdf`),
-    width: '816px',
-    height: `${height}px`,
+    width: `${pdfWidth}px`,
+    height: `${pdfHeight}px`,
     printBackground: true,
     margin: { top: '0', right: '0', bottom: '0', left: '0' },
   });
