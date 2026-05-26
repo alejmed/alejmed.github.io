@@ -2,27 +2,27 @@
 
 /* ─── Tokens ─── */
 :root {
-  --bg: #f7f6f3;
-  --surface: #ffffff;
-  --text: #1a1714;
-  --text-muted: #6b6460;
-  --accent: #2563eb;
-  --accent-h: #1d4ed8;
-  --border: #e4e1db;
-  --nav-bg: rgba(247, 246, 243, 0.88);
+  --bg: #f4f1eb;
+  --surface: #fdfaf4;
+  --text: #1c1a16;
+  --text-muted: #6b5f4e;
+  --accent: #3b6e38;
+  --accent-h: #2c5429;
+  --border: #e0d9ce;
+  --nav-bg: rgba(244, 241, 235, 0.88);
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
   --radius: 10px;
 }
 
 html.dark {
-  --bg: #0f0e0d;
-  --surface: #1a1917;
-  --text: #ede9e3;
-  --text-muted: #9a9389;
-  --accent: #60a5fa;
-  --accent-h: #93c5fd;
-  --border: #2a2724;
-  --nav-bg: rgba(15, 14, 13, 0.88);
+  --bg: #0d0c0a;
+  --surface: #171511;
+  --text: #eee8de;
+  --text-muted: #9e9285;
+  --accent: #72b86f;
+  --accent-h: #8ecb8b;
+  --border: #282420;
+  --nav-bg: rgba(13, 12, 10, 0.88);
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -420,7 +420,7 @@ html.dark .orb {
   --orb-opacity-dark: 0.28;
   width: 580px;
   height: 580px;
-  background: radial-gradient(circle, #2563eb, transparent 68%);
+  background: radial-gradient(circle, #4a7a3e, transparent 68%);
   top: -10%;
   right: -5%;
   animation: float1 16s ease-in-out infinite;
@@ -430,7 +430,7 @@ html.dark .orb {
   --orb-opacity-dark: 0.22;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, #7c3aed, transparent 68%);
+  background: radial-gradient(circle, #7a3b12, transparent 68%);
   bottom: 0%;
   left: -8%;
   animation: float2 20s ease-in-out infinite;
@@ -441,7 +441,7 @@ html.dark .orb {
   --orb-opacity-dark: 0.18;
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, #0ea5e9, transparent 68%);
+  background: radial-gradient(circle, #7a9e6a, transparent 68%);
   top: 40%;
   left: 35%;
   animation: float3 13s ease-in-out infinite;
