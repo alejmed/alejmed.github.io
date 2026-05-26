@@ -12,13 +12,56 @@ import { jobs } from '../data/experience';
       {
         jobs.map((job) => (
           <div class="job fade-in">
-            <div class="job-header">
-              <div>
-                <h2 class="company">{job.company}</h2>
+            {/* Company header */}
+            <div class="company-header">
+              <div class="company-identity">
+                <img
+                  src={job.logo}
+                  alt={`${job.company} logo`}
+                  class="company-logo"
+                  width="44"
+                  height="44"
+                  loading="lazy"
+                  onerror="this.style.display='none'"
+                />
+                <div>
+                  <h2 class="company-name">{job.company}</h2>
+                  <p class="company-descriptor text-muted">{job.descriptor}</p>
+                </div>
+              </div>
+
+              <div class="company-meta">
                 <p class="location text-muted">{job.location}</p>
+                <a href={job.link.url} target="_blank" rel="noopener" class="company-link">
+                  {job.link.label}
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
               </div>
             </div>
 
+            {/* Platform / tech tags */}
+            <div class="company-tags">
+              {job.tags.map((t) => (
+                <span class="pill">{t}</span>
+              ))}
+            </div>
+
+            <div class="roles-divider" />
+
+            {/* Roles */}
             {job.roles.map((role) => (
               <div class="role">
                 <div class="role-meta">
@@ -43,14 +86,15 @@ import { jobs } from '../data/experience';
   .timeline {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
+  /* ─── Job Card ─── */
   .job {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 2rem;
+    padding: 1.75rem 2rem;
     box-shadow: var(--shadow);
     transition: border-color 0.2s;
   }
@@ -59,27 +103,96 @@ import { jobs } from '../data/experience';
     border-color: color-mix(in srgb, var(--accent) 25%, var(--border));
   }
 
-  .job-header {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--border);
+  /* ─── Company Header ─── */
+  .company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .company {
-    font-size: 1.5rem;
+  .company-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+
+  .company-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    object-fit: contain;
+    background: white;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  .company-name {
+    font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  .company-descriptor {
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
+    font-weight: 500;
+  }
+
+  .company-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    flex-shrink: 0;
   }
 
   .location {
-    font-size: 0.85rem;
-    margin-top: 0.2rem;
+    font-size: 0.82rem;
+    text-align: right;
   }
 
-  .role {
-    margin-top: 1.25rem;
+  .company-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    transition:
+      background 0.15s,
+      border-color 0.15s;
   }
 
+  .company-link:hover {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    text-decoration: none;
+  }
+
+  /* ─── Tags ─── */
+  .company-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .roles-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.25rem;
+  }
+
+  /* ─── Roles ─── */
   .role + .role {
     margin-top: 1.5rem;
     padding-top: 1.25rem;
@@ -91,7 +204,7 @@ import { jobs } from '../data/experience';
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.5rem 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.875rem;
   }
 
   .role-title {
@@ -132,5 +245,23 @@ import { jobs } from '../data/experience';
   .bullets li :global(strong) {
     color: var(--text);
     font-weight: 500;
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 540px) {
+    .company-header {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .company-meta {
+      align-items: flex-start;
+      flex-direction: row;
+      gap: 0.75rem;
+    }
+
+    .location {
+      text-align: left;
+    }
   }
 </style>

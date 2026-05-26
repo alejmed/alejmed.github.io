@@ -1,3 +1,8 @@
+export interface CompanyLink {
+  label: string;
+  url: string;
+}
+
 export interface Role {
   title: string;
   period: string;
@@ -7,6 +12,10 @@ export interface Role {
 export interface Job {
   company: string;
   location: string;
+  logo: string;
+  descriptor: string;
+  tags: string[];
+  link: CompanyLink;
   roles: Role[];
 }
 
@@ -14,6 +23,13 @@ export const jobs: Job[] = [
   {
     company: 'EarnIn',
     location: 'Palo Alto, CA · Remote',
+    logo: 'https://logo.clearbit.com/earnin.com',
+    descriptor: 'Fintech · Earned Wage Access',
+    tags: ['Android', 'iOS', 'Kotlin', 'Swift', 'Jetpack Compose'],
+    link: {
+      label: 'App Store',
+      url: 'https://apps.apple.com/us/app/earnin-access-your-pay-early/id974987299',
+    },
     roles: [
       {
         title: 'Senior Software Engineer',
@@ -30,6 +46,10 @@ export const jobs: Job[] = [
   {
     company: 'eBay',
     location: 'San Jose, CA',
+    logo: 'https://logo.clearbit.com/ebay.com',
+    descriptor: 'E-Commerce · Buyer Experience',
+    tags: ['Java', 'Spring Boot', 'Jenkins', 'Grafana'],
+    link: { label: 'ebay.com', url: 'https://www.ebay.com' },
     roles: [
       {
         title: 'Software Developer',
