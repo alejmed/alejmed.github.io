@@ -75,7 +75,7 @@ const stack = [
 const decisions = [
   {
     label: 'OS-native dark mode',
-    detail: 'prefers-color-scheme read by an inline script before first paint. No flash, no localStorage, no state to sync. The toggle is session-only; OS preference is always ground truth.',
+    detail: 'OS preference sets the initial theme via an inline script before first paint, preventing any flash. Toggling writes to sessionStorage so the choice persists across page navigations within the same tab. Closing the tab clears sessionStorage and the OS preference takes over again on the next visit.',
   },
   {
     label: 'WCAG AA contrast',
