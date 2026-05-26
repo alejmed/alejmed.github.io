@@ -20,7 +20,7 @@ export const projects: Project[] = [
     description:
       "Pioneered and architected EarnIn's AI-assisted mobile development workflow, covering context management, custom local CI tooling, emulator and simulator automation, and platform-specific best practices for both Android and iOS. Adopted team-wide as the foundation for how the mobile org writes code.",
     highlights: ['Team-wide adoption', 'Local CI tooling', 'Memory management system'],
-    screenshots: [],  // internal tool — terminal mockup used instead
+    screenshots: [],  // internal tool, terminal mockup used instead
   },
   {
     id: 'earnin-card',

@@ -16,7 +16,7 @@ const githubIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="curren
         projects.map((p) => (
           <article class="project-card fade-in">
 
-            {/* Visual panel — only shown when real screenshots exist */}
+            {/* Visual panel, only shown when real screenshots exist */}
             {p.screenshots.length > 0 && (
               <div class="visual-panel">
                 <ScreenshotGallery screenshots={p.screenshots} alt={p.name} />
