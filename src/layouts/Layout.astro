@@ -40,11 +40,19 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
     <ViewTransitions />
 
-    <!-- Theme init (prevents flash) -->
+    <!-- Theme init (prevents flash on first load and after each View Transition swap) -->
     <script is:inline>
-      const stored = sessionStorage.getItem('theme');
-      if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches))
-        document.documentElement.classList.add('dark');
+      function applyTheme() {
+        const stored = sessionStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
     </script>
 
     <!-- GoatCounter analytics: create free account at goatcounter.com with code "alejmed" -->
