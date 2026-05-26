@@ -7,34 +7,53 @@ const executablePath = execSync(
   { encoding: 'utf8' }
 ).trim();
 
-const browser = await puppeteer.launch({
-  executablePath,
-  args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
-});
+async function generate(mode) {
+  const browser = await puppeteer.launch({
+    executablePath,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
+  });
 
-const page = await browser.newPage();
-await page.setViewport({ width: 820, height: 1122 });
-await page.emulateMediaType('screen');
+  const page = await browser.newPage();
+  await page.setViewport({ width: 816, height: 1056 });
+  await page.emulateMediaType('screen');
 
-await page.goto('http://localhost:3000/resume/', {
-  waitUntil: 'networkidle0',
-  timeout: 30000,
-});
+  // Let the page's own theme script detect OS preference
+  await page.emulateMediaFeatures([
+    { name: 'prefers-color-scheme', value: mode },
+  ]);
 
-await page.evaluate(() => document.fonts.ready);
+  await page.goto('http://localhost:3000/resume/', {
+    waitUntil: 'networkidle0',
+    timeout: 30000,
+  });
 
-// Hide screen-only controls before capture
-await page.evaluate(() => {
-  const el = document.querySelector('.controls');
-  if (el) el.style.display = 'none';
-});
+  await page.evaluate(() => document.fonts.ready);
 
-await page.pdf({
-  path: resolve('dist/resume.pdf'),
-  format: 'A4',
-  printBackground: true,
-  margin: { top: '1.2cm', right: '1.5cm', bottom: '1.2cm', left: '1.5cm' },
-});
+  // Hide controls and tighten outer padding for PDF
+  await page.evaluate(() => {
+    const controls = document.querySelector('.controls');
+    if (controls) controls.style.display = 'none';
+    const wrap = document.querySelector('.resume-wrap');
+    if (wrap) wrap.style.padding = '1.5rem 1.5rem 1.5rem';
+  });
 
-await browser.close();
-console.log('Generated dist/resume.pdf');
+  // Measure content height for a single-page PDF
+  const height = await page.evaluate(() => {
+    const wrap = document.querySelector('.resume-wrap');
+    return (wrap ?? document.body).scrollHeight;
+  });
+
+  await page.pdf({
+    path: resolve(`dist/resume-${mode}.pdf`),
+    width: '816px',
+    height: `${height}px`,
+    printBackground: true,
+    margin: { top: '0', right: '0', bottom: '0', left: '0' },
+  });
+
+  await browser.close();
+  console.log(`Generated dist/resume-${mode}.pdf (${height}px tall)`);
+}
+
+await generate('light');
+await generate('dark');

@@ -31,7 +31,8 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     <div class="nav-right">
       <a
-        href="/resume.pdf"
+        id="resume-download"
+        href="/resume-light.pdf"
         download="Alejandro_Blanco_Resume.pdf"
         class="btn-download"
         title="Download Resume"
@@ -82,7 +83,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
       </a>
     ))
   }
-  <a href="/resume.pdf" download="Alejandro_Blanco_Resume.pdf" class="mobile-download">
+  <a id="resume-download-mobile" href="/resume-light.pdf" download="Alejandro_Blanco_Resume.pdf" class="mobile-download">
     Download Resume
   </a>
 </div>
@@ -94,6 +95,19 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
   menu
     ?.querySelectorAll('a')
     .forEach((a) => a.addEventListener('click', () => menu.classList.remove('open')));
+
+  function syncResumeLinks() {
+    const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    const file = `/resume-${mode}.pdf`;
+    const a = document.getElementById('resume-download') as HTMLAnchorElement | null;
+    const m = document.getElementById('resume-download-mobile') as HTMLAnchorElement | null;
+    if (a) a.href = file;
+    if (m) m.href = file;
+  }
+
+  syncResumeLinks();
+  // Re-sync when theme toggle fires
+  document.getElementById('themeToggle')?.addEventListener('click', syncResumeLinks);
 </script>
 
 <style>
