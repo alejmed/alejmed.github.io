@@ -1,5 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
+import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -37,6 +38,8 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://alejmed.github.io/og.png" />
 
+    <ViewTransitions />
+
     <!-- Theme init (prevents flash) -->
     <script is:inline>
       const stored = sessionStorage.getItem('theme');
@@ -59,8 +62,8 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       <a href="/built-with" class="built-badge" aria-label="How this was built">{"{ }"}</a>
     )}
 
-    <Nav />
-    <main>
+    <Nav transition:persist />
+    <main transition:animate="slide">
       <slot />
     </main>
     <footer>
@@ -75,19 +78,24 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       </div>
     </footer>
 
-    <!-- Fade-in on scroll -->
+    <!-- Fade-in on scroll (re-runs after each View Transition) -->
     <script>
-      const observer = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add('visible');
-              observer.unobserve(e.target);
-            }
-          }),
-        { threshold: 0.1 }
-      );
-      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+      function initFadeIn() {
+        const observer = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+              }
+            }),
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+      }
+
+      initFadeIn();
+      document.addEventListener('astro:page-load', initFadeIn);
     </script>
   </body>
 </html>
