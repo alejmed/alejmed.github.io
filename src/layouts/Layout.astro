@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import ViewTransitions from 'astro/components/ViewTransitions.astro';
+import { fade } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -71,7 +72,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     )}
 
     <Nav transition:persist />
-    <main transition:animate="slide">
+    <main transition:animate={fade({ duration: '0.18s' })}>
       <slot />
     </main>
     <footer>
