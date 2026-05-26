@@ -110,10 +110,14 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     border-radius: 6px;
     padding: 0.3rem 0.65rem;
     text-decoration: none;
-    transition:
-      background 0.15s,
-      border-color 0.15s;
+    transition-property: background-color, border-color, scale;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
     white-space: nowrap;
+  }
+
+  .btn-download:active {
+    scale: 0.96;
   }
 
   .btn-download:hover {

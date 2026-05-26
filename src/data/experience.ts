@@ -27,8 +27,8 @@ export const jobs: Job[] = [
     descriptor: 'Fintech · Earned Wage Access',
     tags: ['Android', 'iOS', 'Kotlin', 'Swift', 'Jetpack Compose'],
     link: {
-      label: 'App Store',
-      url: 'https://apps.apple.com/us/app/earnin-access-your-pay-early/id974987299',
+      label: 'earnin.com',
+      url: 'https://www.earnin.com',
     },
     roles: [
       {

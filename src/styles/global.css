@@ -37,6 +37,8 @@ html.dark {
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -62,6 +64,11 @@ h5 {
   font-family: 'Space Grotesk', sans-serif;
   line-height: 1.15;
   letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 a {
@@ -168,7 +175,7 @@ nav {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px;
+  padding: 10px;
   color: var(--text);
 }
 
@@ -218,8 +225,8 @@ nav {
   border: 1px solid var(--border);
   border-radius: 6px;
   cursor: pointer;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -315,8 +322,14 @@ html.dark .icon-moon {
   border-radius: 8px;
   border: 1.5px solid transparent;
   cursor: pointer;
-  transition: all 0.15s;
+  transition-property: background-color, border-color, scale;
+  transition-duration: 0.15s;
+  transition-timing-function: ease-out;
   text-decoration: none;
+}
+
+.btn:active {
+  scale: 0.96;
 }
 
 .btn-primary {
@@ -361,14 +374,17 @@ footer {
 /* ─── Fade-in on scroll ─── */
 .fade-in {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(12px);
+  filter: blur(4px);
   transition:
     opacity 0.5s ease,
-    transform 0.5s ease;
+    transform 0.5s ease,
+    filter 0.5s ease;
 }
 .fade-in.visible {
   opacity: 1;
   transform: none;
+  filter: blur(0);
 }
 
 /* ─── Background Orbs ─── */
