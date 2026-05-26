@@ -101,6 +101,15 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
         );
         document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
       }
+
+      // On navigation, show content instantly — no fade-in repeat
+      document.addEventListener('astro:after-swap', () => {
+        document.querySelectorAll('.fade-in').forEach((el) => {
+          el.style.transition = 'none';
+          el.classList.add('visible');
+        });
+      });
+
       initFadeIn();
       document.addEventListener('astro:page-load', initFadeIn);
     </script>
