@@ -392,8 +392,8 @@ footer {
   filter: blur(0);
 }
 
-/* ─── Background Orbs ─── */
-.bg-orbs {
+/* ─── Background Texture ─── */
+.bg-texture {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -401,90 +401,35 @@ footer {
   overflow: hidden;
 }
 
-.orb {
-  --orb-opacity-light: 0.13;
-  --orb-opacity-dark: 0.22;
+/* Soft color wash at corners */
+.bg-texture::before {
+  content: '';
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: var(--orb-opacity-light);
-  will-change: transform;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 108% -8%, color-mix(in srgb, #4a7a3e 22%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 50% at -8% 108%, color-mix(in srgb, #7a3b12 18%, transparent), transparent 70%);
+  opacity: 0.5;
 }
 
-html.dark .orb {
-  opacity: var(--orb-opacity-dark);
-  mix-blend-mode: screen;
+html.dark .bg-texture::before {
+  opacity: 0.35;
 }
 
-.orb-1 {
-  --orb-opacity-dark: 0.28;
-  width: 580px;
-  height: 580px;
-  background: radial-gradient(circle, #4a7a3e, transparent 68%);
-  top: -10%;
-  right: -5%;
-  animation: float1 16s ease-in-out infinite;
+/* Film grain overlay */
+.bg-texture::after {
+  content: '';
+  position: absolute;
+  inset: -100px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.032;
 }
 
-.orb-2 {
-  --orb-opacity-dark: 0.22;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, #7a3b12, transparent 68%);
-  bottom: 0%;
-  left: -8%;
-  animation: float2 20s ease-in-out infinite;
-}
-
-.orb-3 {
-  --orb-opacity-light: 0.09;
-  --orb-opacity-dark: 0.18;
-  width: 380px;
-  height: 380px;
-  background: radial-gradient(circle, #7a9e6a, transparent 68%);
-  top: 40%;
-  left: 35%;
-  animation: float3 13s ease-in-out infinite;
-}
-
-@keyframes float1 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(-55px, 40px) scale(1.06);
-  }
-  66% {
-    transform: translate(35px, -55px) scale(0.94);
-  }
-}
-
-@keyframes float2 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(65px, -30px) scale(1.08);
-  }
-  66% {
-    transform: translate(-30px, 65px) scale(0.95);
-  }
-}
-
-@keyframes float3 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-45px, 55px) scale(1.12);
-  }
+html.dark .bg-texture::after {
+  opacity: 0.05;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb,
   .currently-dot {
     animation: none;
   }
