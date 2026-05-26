@@ -1,9 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import EarninCard from '../components/previews/EarninCard.astro';
-import AccountActivity from '../components/previews/AccountActivity.astro';
-import AiWorkflow from '../components/previews/AiWorkflow.astro';
+import ScreenshotGallery from '../components/ScreenshotGallery.astro';
 import { projects } from '../data/projects';
 
 const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
@@ -17,24 +15,21 @@ const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" s
       {
         projects.map((p) => (
           <article class="project-card fade-in">
-            {/* Visual preview panel */}
-            <div class="preview-panel">
-              {p.id === 'ai-workflow' && <AiWorkflow />}
-              {p.id === 'earnin-card' && <EarninCard />}
-              {p.id === 'account-activity' && <AccountActivity />}
-            </div>
 
-            {/* Content panel */}
+            {/* Visual panel — only shown when real screenshots exist */}
+            {p.screenshots.length > 0 && (
+              <div class="visual-panel">
+                <ScreenshotGallery screenshots={p.screenshots} alt={p.name} />
+              </div>
+            )}
+
+            {/* Content */}
             <div class="content-panel">
               <div class="content-top">
-                <p class="project-meta text-muted">
-                  {p.company} — {p.role}
-                </p>
+                <p class="project-meta text-muted">{p.company} — {p.role}</p>
                 <h2 class="project-name">{p.name}</h2>
                 <div class="tag-row">
-                  {p.tags.map((t) => (
-                    <span class="pill">{t}</span>
-                  ))}
+                  {p.tags.map((t) => <span class="pill">{t}</span>)}
                 </div>
               </div>
 
@@ -49,6 +44,7 @@ const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" s
                 ))}
               </ul>
             </div>
+
           </article>
         ))
       }
@@ -65,37 +61,32 @@ const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" s
 
   /* ─── Card ─── */
   .project-card {
-    display: grid;
-    grid-template-columns: 260px 1fr;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     overflow: hidden;
-    transition:
-      border-color 0.2s,
-      box-shadow 0.2s;
-    min-height: 280px;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
   .project-card:hover {
     border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
   }
 
   html.dark .project-card:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
   }
 
-  /* ─── Preview panel ─── */
-  .preview-panel {
+  /* ─── Visual panel ─── */
+  .visual-panel {
     position: relative;
-    border-right: 1px solid var(--border);
+    height: 260px;
+    border-bottom: 1px solid var(--border);
     overflow: hidden;
-    background: #0d1117;
   }
 
-  .preview-panel > :global(*) {
+  .visual-panel > :global(*) {
     position: absolute;
     inset: 0;
   }
@@ -122,7 +113,7 @@ const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" s
   }
 
   .project-name {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     letter-spacing: -0.025em;
     line-height: 1.2;
@@ -132,21 +123,20 @@ const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" s
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem;
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
   }
 
   .project-desc {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     line-height: 1.75;
     color: var(--text-muted);
-    flex: 1;
   }
 
   .highlights {
     list-style: none;
     display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
   }
 
   .highlights li {
@@ -163,17 +153,8 @@ const checkIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" s
     flex-shrink: 0;
   }
 
-  /* ─── Responsive ─── */
-  @media (max-width: 680px) {
-    .project-card {
-      grid-template-columns: 1fr;
-      min-height: unset;
-    }
-
-    .preview-panel {
-      height: 220px;
-      border-right: none;
-      border-bottom: 1px solid var(--border);
-    }
+  @media (max-width: 600px) {
+    .visual-panel { height: 200px; }
+    .content-panel { padding: 1.25rem; }
   }
 </style>
