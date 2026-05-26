@@ -39,9 +39,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Theme init (prevents flash) -->
     <script is:inline>
-      const saved = localStorage.getItem('theme');
-      const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (saved === 'dark' || (saved === null && osDark))
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches)
         document.documentElement.classList.add('dark');
     </script>
 
