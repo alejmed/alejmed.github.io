@@ -48,6 +48,13 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
   <script data-goatcounter="https://alejmed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+  <!-- Background orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
   <Nav />
   <main>
     <slot />
