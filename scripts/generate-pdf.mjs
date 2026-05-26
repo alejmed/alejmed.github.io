@@ -14,14 +14,11 @@ async function generate(mode) {
   });
 
   const page = await browser.newPage();
-  // Wide viewport so content renders at its natural width (max-width: 820px)
-  await page.setViewport({ width: 1200, height: 1056 });
   await page.emulateMediaType('screen');
+  await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: mode }]);
 
-  // Let the page's own theme script detect OS preference
-  await page.emulateMediaFeatures([
-    { name: 'prefers-color-scheme', value: mode },
-  ]);
+  // Match viewport exactly to resume max-width so margin:auto doesn't offset content
+  await page.setViewport({ width: 820, height: 1056 });
 
   await page.goto('http://localhost:3000/resume/', {
     waitUntil: 'networkidle0',
@@ -30,30 +27,29 @@ async function generate(mode) {
 
   await page.evaluate(() => document.fonts.ready);
 
-  // Hide controls and tighten outer padding for PDF
   await page.evaluate(() => {
     const controls = document.querySelector('.controls');
     if (controls) controls.style.display = 'none';
-    const wrap = document.querySelector('.resume-wrap');
-    if (wrap) wrap.style.padding = '1.5rem 1.5rem 1.5rem';
+    // Remove screen padding so card fills the full width
+    const wrap = document.querySelector('.resume-wrap') as HTMLElement | null;
+    if (wrap) { wrap.style.padding = '0'; wrap.style.maxWidth = 'none'; }
   });
 
-  // Measure rendered dimensions for a single-page, no-clip PDF
-  const { pdfWidth, pdfHeight } = await page.evaluate(() => {
+  const pdfHeight = await page.evaluate(() => {
     const wrap = document.querySelector('.resume-wrap') ?? document.body;
-    return { pdfWidth: wrap.scrollWidth, pdfHeight: wrap.scrollHeight };
+    return wrap.scrollHeight;
   });
 
   await page.pdf({
     path: resolve(`dist/resume-${mode}.pdf`),
-    width: `${pdfWidth}px`,
+    width: '820px',
     height: `${pdfHeight}px`,
     printBackground: true,
     margin: { top: '0', right: '0', bottom: '0', left: '0' },
   });
 
   await browser.close();
-  console.log(`Generated dist/resume-${mode}.pdf (${pdfWidth}x${pdfHeight}px)`);
+  console.log(`Generated dist/resume-${mode}.pdf (820x${pdfHeight}px)`);
 }
 
 await generate('light');
