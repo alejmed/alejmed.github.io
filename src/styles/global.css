@@ -464,19 +464,6 @@ footer {
   z-index: 1;
 }
 
-@keyframes slide-out-left {
-  to { opacity: 0; transform: translateX(-20px); }
-}
-@keyframes slide-in-right {
-  from { opacity: 0; transform: translateX(20px); }
-}
-@keyframes slide-out-right {
-  to { opacity: 0; transform: translateX(-20px); }
-}
-@keyframes slide-in-left {
-  from { opacity: 0; transform: translateX(20px); }
-}
-
 .no-transition,
 .no-transition * {
   transition: none !important;

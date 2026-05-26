@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import ViewTransitions from 'astro/components/ViewTransitions.astro';
+import { slide } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -71,16 +72,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     )}
 
     <Nav transition:persist />
-    <main transition:animate={{
-      forwards: {
-        old: { name: 'slide-out-left', duration: '0.18s', easing: 'ease-in', fillMode: 'both' },
-        new: { name: 'slide-in-right', duration: '0.22s', easing: 'ease-out', fillMode: 'both' },
-      },
-      backwards: {
-        old: { name: 'slide-out-right', duration: '0.18s', easing: 'ease-in', fillMode: 'both' },
-        new: { name: 'slide-in-left', duration: '0.22s', easing: 'ease-out', fillMode: 'both' },
-      },
-    }}>
+    <main transition:animate={slide({ duration: '0.22s' })}>
       <slot />
     </main>
     <footer>
