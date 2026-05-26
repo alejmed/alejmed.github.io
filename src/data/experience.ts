@@ -35,9 +35,9 @@ export const jobs: Job[] = [
         title: 'Senior Software Engineer',
         period: 'Aug 2022 – Present',
         bullets: [
-          'Led 7-engineer cross-platform team (3 Android, 4 iOS) to launch and GA the EarnIn Card, driving 600K+ waitlist signups and 1M+ Live Pay transactions post-launch.',
-          "Built Account Activity: full Android ownership of EarnIn's ledger-based transaction system, covering BE/FE contracts, engineering design, Jetpack Compose UI, and product/design iteration.",
-          'Defined scope, timelines, and stakeholder alignment across multiple product initiatives; drove API contract definition across product, design, and backend teams.',
+          '<strong>EarnIn Card:</strong> Led 7-engineer cross-platform team (3 Android, 4 iOS) to launch and GA, driving 600K+ waitlist signups and 1M+ Live Pay transactions post-launch.',
+          "<strong>Account Activity:</strong> Full Android ownership of EarnIn's ledger-based transaction system — BE/FE contracts, engineering design, Jetpack Compose UI, and product/design iteration.",
+          '<strong>Cross-Team Alignment:</strong> Defined scope, timelines, and stakeholder alignment across multiple product initiatives; drove API contract definition across product, design, and backend teams.',
           "<strong>AI Mobile Lead:</strong> Architected EarnIn's AI-assisted mobile development workflow — memory management, custom local CI tooling, emulator/simulator automation, and iOS/Android best practices. Adopted team-wide.",
         ],
       },
