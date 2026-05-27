@@ -4,6 +4,8 @@ import PageHeader from '../components/PageHeader.astro';
 
 const githubIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>`;
 
+const chevronIcon = `<svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 8 10 12 6"/></svg>`;
+
 const aiSkills = [
   {
     name: 'Claude Code',
@@ -106,6 +108,44 @@ const decisions = [
     detail: 'transition-delay set per element (0 / 100 / 200 / 300ms), not on a wrapper. Each semantic chunk animates independently so individual delays are meaningful.',
   },
 ];
+
+const colorTokens = [
+  { name: '--bg',          light: '#f4f1eb', dark: '#0d0c0a',  label: 'Background' },
+  { name: '--surface',     light: '#fdfaf4', dark: '#171511',  label: 'Surface' },
+  { name: '--text',        light: '#1c1a16', dark: '#eee8de',  label: 'Text' },
+  { name: '--text-muted',  light: '#6b5f4e', dark: '#9e9285',  label: 'Text muted' },
+  { name: '--accent',      light: '#3b6e38', dark: '#72b86f',  label: 'Accent' },
+  { name: '--border',      light: '#e0d9ce', dark: '#282420',  label: 'Border' },
+];
+
+const typographyTokens = [
+  {
+    family: 'Space Grotesk',
+    role: 'Headings',
+    specimens: [
+      { weight: 700, label: 'Bold — section headers, name' },
+      { weight: 600, label: 'SemiBold — card titles' },
+      { weight: 500, label: 'Medium — labels' },
+    ],
+  },
+  {
+    family: 'Inter',
+    role: 'Body',
+    specimens: [
+      { weight: 400, label: 'Regular — body copy' },
+      { weight: 300, label: 'Light — detail text' },
+      { weight: 500, label: 'Medium — emphasis' },
+    ],
+  },
+  {
+    family: 'JetBrains Mono',
+    role: 'Monospace',
+    specimens: [
+      { weight: 400, label: 'Regular — code, token names' },
+      { weight: 700, label: 'Bold — skill names' },
+    ],
+  },
+];
 ---
 
 <Layout title="How this site was built | Alejandro Blanco">
@@ -129,23 +169,130 @@ const decisions = [
 
     <div class="divider"></div>
 
+    <!-- AI Workflow accordion -->
     <section class="fade-in">
-      <p class="section-label">AI workflow</p>
-      <div class="ai-list">
-        {aiSkills.map((item) => (
-          <div class="ai-card">
-            <div class="ai-header">
-              <span class="ai-name">{item.name}</span>
-              <span class="stack-role">{item.role}</span>
-              <a href={item.repoUrl} target="_blank" rel="noopener" class="ai-repo">
-                <Fragment set:html={githubIcon} />
-                {item.repoLabel}
-              </a>
-            </div>
-            <p class="ai-detail">{item.detail}</p>
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <p class="section-label">AI workflow</p>
+          <Fragment set:html={chevronIcon} />
+        </summary>
+        <div class="accordion-body">
+          <div class="ai-list">
+            {aiSkills.map((item) => (
+              <div class="ai-card">
+                <div class="ai-header">
+                  <span class="ai-name">{item.name}</span>
+                  <span class="stack-role">{item.role}</span>
+                  <a href={item.repoUrl} target="_blank" rel="noopener" class="ai-repo">
+                    <Fragment set:html={githubIcon} />
+                    {item.repoLabel}
+                  </a>
+                </div>
+                <p class="ai-detail">{item.detail}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      </details>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Design System accordion -->
+    <section class="fade-in">
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <p class="section-label">Design system</p>
+          <Fragment set:html={chevronIcon} />
+        </summary>
+        <div class="accordion-body">
+
+          <!-- Colors -->
+          <div class="ds-group">
+            <p class="ds-group-label">Colors</p>
+            <div class="color-grid">
+              {colorTokens.map((token) => (
+                <div class="color-swatch">
+                  <div class="swatch-pair">
+                    <div class="swatch" style={`background:${token.light}`} title={`Light: ${token.light}`}></div>
+                    <div class="swatch swatch-dark" style={`background:${token.dark}`} title={`Dark: ${token.dark}`}></div>
+                  </div>
+                  <p class="swatch-name">{token.name}</p>
+                  <p class="swatch-label">{token.label}</p>
+                  <p class="swatch-values"><span>{token.light}</span><span class="swatch-sep">/</span><span>{token.dark}</span></p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Typography -->
+          <div class="ds-group">
+            <p class="ds-group-label">Typography</p>
+            <div class="type-list">
+              {typographyTokens.map((t) => (
+                <div class="type-card">
+                  <div class="type-header">
+                    <span class="type-family" style={`font-family:'${t.family}',sans-serif`}>{t.family}</span>
+                    <span class="stack-role">{t.role}</span>
+                  </div>
+                  <div class="type-specimens">
+                    {t.specimens.map((s) => (
+                      <div class="specimen-row">
+                        <span class="specimen-text" style={`font-family:'${t.family}',monospace;font-weight:${s.weight}`}>
+                          Aa
+                        </span>
+                        <span class="specimen-meta">{s.weight} — {s.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Components -->
+          <div class="ds-group">
+            <p class="ds-group-label">Components</p>
+            <div class="component-grid">
+
+              <div class="component-card">
+                <p class="component-label">Buttons</p>
+                <div class="component-row">
+                  <button class="btn btn-primary">Primary</button>
+                  <button class="btn btn-outline">Outline</button>
+                </div>
+              </div>
+
+              <div class="component-card">
+                <p class="component-label">Badges</p>
+                <div class="component-row">
+                  <span class="pill">Android</span>
+                  <span class="pill">iOS</span>
+                  <span class="stack-role">Framework</span>
+                </div>
+              </div>
+
+              <div class="component-card">
+                <p class="component-label">Card</p>
+                <div class="card ds-card-demo">
+                  <p class="section-label" style="margin-bottom:0.25rem">Section label</p>
+                  <p style="font-size:0.83rem;color:var(--text-muted);margin:0">Surface card with border, shadow, and radius token.</p>
+                </div>
+              </div>
+
+              <div class="component-card">
+                <p class="component-label">Section label</p>
+                <div class="component-row">
+                  <p class="section-label" style="margin:0">About</p>
+                  <p class="section-label" style="margin:0">Experience</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </details>
     </section>
 
     <div class="divider"></div>
@@ -214,18 +361,69 @@ const decisions = [
     scale: 0.96;
   }
 
-  /* AI workflow */
+  /* ─── Accordion ─── */
+  .accordion {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+
+  .accordion[open] {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  }
+
+  .accordion-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: background-color 0.15s;
+  }
+
+  .accordion-summary::-webkit-details-marker { display: none; }
+
+  .accordion-summary:hover {
+    background: color-mix(in srgb, var(--accent) 4%, var(--surface));
+  }
+
+  .accordion-summary .section-label {
+    margin: 0;
+  }
+
+  .accordion-summary :global(.chevron) {
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .accordion[open] .accordion-summary :global(.chevron) {
+    transform: rotate(180deg);
+  }
+
+  .accordion-body {
+    padding: 0 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* ─── AI workflow ─── */
   .ai-list {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    margin-top: 1rem;
+    margin-top: 0.25rem;
   }
 
   .ai-card {
-    background: var(--surface);
+    background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: calc(var(--radius) - 2px);
     padding: 1.1rem 1.25rem;
     display: flex;
     flex-direction: column;
@@ -276,7 +474,171 @@ const decisions = [
     margin: 0;
   }
 
-  /* Stack */
+  /* ─── Design system ─── */
+  .ds-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .ds-group-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Colors */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .color-swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .swatch-pair {
+    display: flex;
+    border-radius: calc(var(--radius) - 4px);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    height: 44px;
+  }
+
+  .swatch {
+    flex: 1;
+  }
+
+  .swatch-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .swatch-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .swatch-values {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+  }
+
+  .swatch-sep {
+    color: var(--border);
+  }
+
+  /* Typography */
+  .type-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .type-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .type-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .type-family {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .type-specimens {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .specimen-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .specimen-text {
+    font-size: 1.5rem;
+    color: var(--text);
+    min-width: 2.5rem;
+  }
+
+  .specimen-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* Components */
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .component-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .component-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .component-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .ds-card-demo {
+    padding: 0.75rem 1rem;
+  }
+
+  /* ─── Stack ─── */
   .stack-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -341,7 +703,7 @@ const decisions = [
     margin: 0;
   }
 
-  /* Decisions */
+  /* ─── Decisions ─── */
   .decisions-list {
     display: flex;
     flex-direction: column;
@@ -396,6 +758,14 @@ const decisions = [
 
     .ai-repo {
       margin-left: 0;
+    }
+
+    .color-grid {
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    }
+
+    .component-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
