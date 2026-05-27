@@ -298,32 +298,46 @@ const typographyTokens = [
     <div class="divider"></div>
 
     <section class="fade-in">
-      <p class="section-label">Stack</p>
-      <div class="stack-list">
-        {stack.map((item) => (
-          <div class="stack-card">
-            <div class="stack-header">
-              <a href={item.url} target="_blank" rel="noopener" class="stack-name">{item.name}</a>
-              <span class="stack-role">{item.role}</span>
-            </div>
-            <p class="stack-detail">{item.detail}</p>
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <p class="section-label">Stack</p>
+          <Fragment set:html={chevronIcon} />
+        </summary>
+        <div class="accordion-body">
+          <div class="stack-list">
+            {stack.map((item) => (
+              <div class="stack-card">
+                <div class="stack-header">
+                  <a href={item.url} target="_blank" rel="noopener" class="stack-name">{item.name}</a>
+                  <span class="stack-role">{item.role}</span>
+                </div>
+                <p class="stack-detail">{item.detail}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      </details>
     </section>
 
     <div class="divider"></div>
 
     <section class="fade-in">
-      <p class="section-label">Design decisions</p>
-      <div class="decisions-list">
-        {decisions.map((d) => (
-          <div class="decision-row">
-            <p class="decision-label">{d.label}</p>
-            <p class="decision-detail">{d.detail}</p>
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <p class="section-label">Design decisions</p>
+          <Fragment set:html={chevronIcon} />
+        </summary>
+        <div class="accordion-body">
+          <div class="decisions-list">
+            {decisions.map((d) => (
+              <div class="decision-row">
+                <p class="decision-label">{d.label}</p>
+                <p class="decision-detail">{d.detail}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      </details>
     </section>
   </div>
 </Layout>
@@ -681,7 +695,6 @@ const typographyTokens = [
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 0.75rem;
-    margin-top: 1rem;
   }
 
   .stack-card {
@@ -745,7 +758,6 @@ const typographyTokens = [
   .decisions-list {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     overflow: hidden;
