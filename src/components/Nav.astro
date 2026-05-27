@@ -107,8 +107,11 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
   }
 
   syncResumeLinks();
-  // Re-sync when theme toggle fires
-  document.getElementById('themeToggle')?.addEventListener('click', syncResumeLinks);
+  // Watch for class changes on <html> — avoids the race where a click listener
+  // reads the old class before the toggle has flipped it.
+  new MutationObserver(syncResumeLinks).observe(document.documentElement, {
+    attributeFilter: ['class'],
+  });
 </script>
 
 <style>
