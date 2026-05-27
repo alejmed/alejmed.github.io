@@ -33,7 +33,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
       <a
         id="resume-download"
         href="/resume-light.pdf"
-        download="Alejandro_Blanco_Resume.pdf"
+        download="Alejandro Blanco - Resume.pdf"
         class="btn-download"
         title="Download Resume"
         aria-label="Download Resume"
@@ -83,7 +83,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
       </a>
     ))
   }
-  <a id="resume-download-mobile" href="/resume-light.pdf" download="Alejandro_Blanco_Resume.pdf" class="mobile-download">
+  <a id="resume-download-mobile" href="/resume-light.pdf" download="Alejandro Blanco - Resume.pdf" class="mobile-download">
     Download Resume
   </a>
 </div>
@@ -99,10 +99,11 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
   function syncResumeLinks() {
     const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     const file = `/resume-${mode}.pdf`;
+    const name = 'Alejandro Blanco - Resume.pdf';
     const a = document.getElementById('resume-download') as HTMLAnchorElement | null;
     const m = document.getElementById('resume-download-mobile') as HTMLAnchorElement | null;
-    if (a) a.href = file;
-    if (m) m.href = file;
+    if (a) { a.href = file; a.download = name; }
+    if (m) { m.href = file; m.download = name; }
   }
 
   syncResumeLinks();
