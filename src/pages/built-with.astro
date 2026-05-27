@@ -328,6 +328,44 @@ const typographyTokens = [
   </div>
 </Layout>
 
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.accordion').forEach((details) => {
+    const summary = details.querySelector('summary')!;
+    const body = details.querySelector<HTMLElement>('.accordion-body')!;
+    let animation: Animation | null = null;
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (animation) { animation.cancel(); animation = null; }
+
+      if (details.open) {
+        body.style.overflow = 'hidden';
+        animation = body.animate(
+          [{ height: body.scrollHeight + 'px', opacity: '1' }, { height: '0px', opacity: '0' }],
+          { duration: 280, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' }
+        );
+        animation.onfinish = () => {
+          details.open = false;
+          body.style.overflow = '';
+          animation = null;
+        };
+      } else {
+        details.open = true;
+        const h = body.scrollHeight;
+        body.style.overflow = 'hidden';
+        animation = body.animate(
+          [{ height: '0px', opacity: '0' }, { height: h + 'px', opacity: '1' }],
+          { duration: 280, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' }
+        );
+        animation.onfinish = () => {
+          body.style.overflow = '';
+          animation = null;
+        };
+      }
+    });
+  });
+</script>
+
 <style>
   .intro {
     display: flex;
