@@ -1,6 +1,8 @@
 ---
+import DownloadIcon from '../components/icons/DownloadIcon.astro';
 import { jobs } from '../data/experience';
 import { skillGroups } from '../data/skills';
+import ThemeInit from '../components/ThemeInit.astro';
 import '../styles/global.css';
 ---
 
@@ -10,15 +12,7 @@ import '../styles/global.css';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alejandro Blanco | Resume</title>
-    <script is:inline>
-      (function () {
-        const stored = sessionStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (stored === 'dark' || (!stored && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
+    <ThemeInit />
   </head>
   <body>
     <div class="resume-wrap">
@@ -29,7 +23,7 @@ import '../styles/global.css';
           Back
         </a>
         <a id="resume-dl" href="/resume-light.pdf" download="Alejandro Blanco - Resume.pdf" class="print-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <DownloadIcon size={14} />
           Download PDF
         </a>
       </div>

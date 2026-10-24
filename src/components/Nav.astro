@@ -1,4 +1,5 @@
 ---
+import DownloadIcon from './icons/DownloadIcon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 const links = [
@@ -38,20 +39,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
         title="Download Resume"
         aria-label="Download Resume"
       >
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
+        <DownloadIcon size={15} />
         <span class="download-label">Resume</span>
       </a>
       <ThemeToggle />
@@ -89,21 +77,24 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 </div>
 
 <script>
-  const btn = document.getElementById('hamburger');
+  const hamburger = document.getElementById('hamburger');
   const menu = document.getElementById('mobileMenu');
-  btn?.addEventListener('click', () => menu?.classList.toggle('open'));
+  hamburger?.addEventListener('click', () => menu?.classList.toggle('open'));
   menu
     ?.querySelectorAll('a')
-    .forEach((a) => a.addEventListener('click', () => menu.classList.remove('open')));
+    .forEach((link) => link.addEventListener('click', () => menu.classList.remove('open')));
 
+  const resumeLinkIds = ['resume-download', 'resume-download-mobile'];
+
+  // Point the desktop and mobile resume links at the PDF matching the current theme.
   function syncResumeLinks() {
     const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     const file = `/resume-${mode}.pdf`;
     const name = 'Alejandro Blanco - Resume.pdf';
-    const a = document.getElementById('resume-download') as HTMLAnchorElement | null;
-    const m = document.getElementById('resume-download-mobile') as HTMLAnchorElement | null;
-    if (a) { a.href = file; a.download = name; }
-    if (m) { m.href = file; m.download = name; }
+    for (const linkId of resumeLinkIds) {
+      const resumeLink = document.getElementById(linkId) as HTMLAnchorElement | null;
+      if (resumeLink) { resumeLink.href = file; resumeLink.download = name; }
+    }
   }
 
   syncResumeLinks();
