@@ -1,5 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
+import ThemeInit from '../components/ThemeInit.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -38,15 +39,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:image" content="https://alejmed.github.io/og.png" />
 
     <!-- Theme init (prevents flash on first load) -->
-    <script is:inline>
-      (function () {
-        const stored = sessionStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (stored === 'dark' || (!stored && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
+    <ThemeInit />
 
     <!-- GoatCounter analytics: create free account at goatcounter.com with code "alejmed" -->
     <script
